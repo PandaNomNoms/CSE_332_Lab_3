@@ -47,7 +47,7 @@ ostream& operator<<(std::ostream& o, const magicSquare& game){
 bool magicSquare::done(){
 
 	for (game_piece piece : board_h){
-		if (piece.name_h.length != 1){
+		if (piece.name_h.length() != 1){
 			return false;
 		}
 	}
@@ -72,7 +72,7 @@ bool magicSquare::done(){
 
 bool magicSquare::stalemate(){
 	for (game_piece piece : board_h){
-		if (piece.name_h.length != 1){
+		if (piece.name_h.length() != 1){
 			return false;
 		}
 	}
