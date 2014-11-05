@@ -12,6 +12,27 @@ NineAlmondsGame::NineAlmondsGame(vector<game_piece> board)
 	:gameBase(board, almond_height, almond_width)
 {}
 
+ostream& operator<< (ostream& o, const NineAlmondsGame& game) {
+	int index;
+	/*Print row*/
+	for (int y = game.height_h - 1; y >= 0; y--) {
+		/*Print y-axis*/
+		o << y << " ";
+		/*Print column*/
+		for (int x = 0; x <= game.height_h - 1; x++) {
+			index = game.width_h * y + x;
+			o << setw(game.longest) << game.board_h[index].display_h << " ";
+		}
+		o << endl;
+	}
+	/*Print x-axis*/
+	o << "x ";
+	for (int x = 0; x <= game.width_h - 1; x++) {
+		o << setw(game.longest) << x << " ";
+	}
+	return o;
+}
+
 void NineAlmondsGame::initialize(vector<game_piece>& board) {
 	/*Create empty board*/
 	for (int i = 0; i < height_h * width_h; ++i) {
@@ -206,25 +227,4 @@ bool NineAlmondsGame::valid(int x1, int y1, int x2, int y2) {
 
 void NineAlmondsGame::print() {
 	cout << *this;
-}
-
-ostream& operator<< (ostream& o, const NineAlmondsGame& game) {
-	int index;
-	/*Print row*/
-	for (int y = game.getHeight - 1; y >= 0; y--) {
-		/*Print y-axis*/
-		o << y << " ";
-		/*Print column*/
-		for (int x = 0; x <= game.getHeight - 1; x++) {
-			index = game.getWidth * y + x;
-			o << setw(game.getLongest) << game.getBoard[index].display_h << " ";
-		}
-		o << endl;
-	}
-	/*Print x-axis*/
-	o << "x ";
-	for (int x = 0; x <= game.getWidth - 1; x++) {
-		o << setw(game.getLongest) << x << " ";
-	}
-	return o;
 }

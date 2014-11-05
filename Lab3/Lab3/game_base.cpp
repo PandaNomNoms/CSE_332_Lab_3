@@ -37,25 +37,9 @@ void gameBase::initiateLongest(vector<game_piece> board, int & longest) {
 }
 
 void gameBase::checkLongest(game_piece g, int & longest) {
-	if (g.display_h.length > longest) {
-		longest = g.display_h.length;
+	if (((int)g.display_h.length()) > longest) {
+		longest = (int) (g.display_h.length());
 	}
-}
-
-int gameBase::getHeight() {
-	return height_h;
-}
-
-int gameBase::getWidth() {
-	return width_h;
-}
-
-int gameBase::getLongest() {
-	return longest;
-}
-
-vector<game_piece> gameBase::getBoard() {
-	return board_h;
 }
 
 /*Begin the game*/

@@ -25,10 +25,6 @@ public:
 	
 	gameBase(std::vector<game_piece>, int, int);
 	gameBase();
-	int getHeight();
-	int getWidth();
-	int getLongest();
-	std::vector<game_piece> getBoard();
 };
 
 #endif

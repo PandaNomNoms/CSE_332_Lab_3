@@ -21,20 +21,20 @@ magicSquare::magicSquare(std::vector<game_piece> pieces) : gameBase(pieces, 4, 4
 ostream& operator<<(std::ostream& o, const magicSquare& game){
 	int index;
 	/*Print row*/
-	for (int y = game.getHeight - 1; y >= 0; y--) {
+	for (int y = game.height_h - 1; y >= 0; y--) {
 		/*Print y-axis*/
 		o << y << " ";
 		/*Print column*/
-		for (int x = 0; x <= game.getHeight - 1; x++) {
-			index = game.getWidth * y + x;
-			o << setw(game.getLongest) << game.getBoard[index].display_h << " ";
+		for (int x = 0; x <= game.height_h - 1; x++) {
+			index = game.width_h * y + x;
+			o << setw(game.longest) << game.board_h[index].display_h << " ";
 		}
 		o << endl;
 	}
 	/*Print x-axis*/
 	o << "x ";
-	for (int x = 0; x <= game.getWidth - 1; x++) {
-		o << setw(game.getLongest) << x << " ";
+	for (int x = 0; x <= game.height_h - 1; x++) {
+		o << setw(game.longest) << x << " ";
 	}
 	o << "\n";
 	o << "Available pieces: ";

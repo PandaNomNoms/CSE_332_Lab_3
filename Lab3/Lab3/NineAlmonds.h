@@ -5,9 +5,8 @@
 #ifndef NINEALMONDS_H
 #define NINEALMONDS_H
 
-std::ostream& operator<< (std::ostream&, const NineAlmondsGame&);
-
 class NineAlmondsGame : public gameBase {
+	friend std::ostream& operator<< (std::ostream&, const NineAlmondsGame&);
 	void initialize(std::vector<game_piece>&);
 public:
 	NineAlmondsGame(std::vector<game_piece>);
@@ -19,5 +18,7 @@ public:
 	bool valid(int, int, int, int);
 	void print();
 };
+
+std::ostream& operator<< (std::ostream &, const NineAlmondsGame &);
 
 #endif NINEALMONDS_H
