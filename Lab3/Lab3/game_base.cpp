@@ -5,7 +5,17 @@
 #include <algorithm>
 #include "common.h"
 #include "game_base.h"
+#include "NineAlmonds.h"
 using namespace std;
+
+static gameBase * gameBase::getGame(int argc, char* argv[]) {
+	if (lowerCase(argv[1]) == "ninealmonds") {
+		return &(new NineAlmondsGame(new vector<game_piece>));
+	}
+	else {
+		return;
+	}
+}
 
 gameBase::gameBase(vector<game_piece> board, int height, int width)
 	:board_h(board), height_h(height), width_h(width)

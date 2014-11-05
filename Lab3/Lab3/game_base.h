@@ -14,6 +14,7 @@ protected:
 	void initiateLongest(vector<game_piece>, int &);
 	void checkLongest(game_piece g, int &);
 public:
+	static gameBase * getGame(int, char**);
 	int play();
 	virtual void initialize(std::vector<game_piece>) = 0;
 	virtual void print() = 0;
