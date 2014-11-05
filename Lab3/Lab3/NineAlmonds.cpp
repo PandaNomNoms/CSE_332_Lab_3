@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include <iostream>
+#include <iomanip>
 #include <vector>
 #include <sstream>
 #include <algorithm>
@@ -236,6 +237,10 @@ bool NineAlmondsGame::valid(int x1, int y1, int x2, int y2) {
 	return true;
 }
 
+void NineAlmondsGame::print() {
+	cout << *this;
+}
+
 ostream& operator<< (ostream& o, const NineAlmondsGame& game) {
 	int index;
 	/*Print row*/
@@ -245,14 +250,14 @@ ostream& operator<< (ostream& o, const NineAlmondsGame& game) {
 		/*Print column*/
 		for (int x = 0; x <= game.getHeight - 1; x++) {
 			index = game.getWidth * y + x;
-			o << game.getBoard[index].display_h << " ";
+			o << setw(game.getLongest) << game.getBoard[index].display_h << " ";
 		}
 		o << endl;
 	}
 	/*Print x-axis*/
 	o << "x ";
 	for (int x = 0; x <= game.getWidth - 1; x++) {
-		o << x << " ";
+		o << setw(game.getLongest) << x << " ";
 	}
 	return o;
 }
