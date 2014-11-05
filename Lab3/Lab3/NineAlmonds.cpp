@@ -23,6 +23,7 @@ void NineAlmondsGame::initialize(vector<game_piece>& board) {
 			board[i + width_h*j] = game_piece(name, display);
 		}
 	}
+	initiateLongest(board, longest);
 }
 
 bool NineAlmondsGame::done() {

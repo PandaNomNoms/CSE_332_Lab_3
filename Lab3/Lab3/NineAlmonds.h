@@ -7,7 +7,7 @@
 
 std::ostream& operator<< (std::ostream&, const NineAlmondsGame&);
 
-class NineAlmondsGame : gameBase {
+class NineAlmondsGame : public gameBase {
 	void initialize(std::vector<game_piece>&);
 public:
 	NineAlmondsGame(std::vector<game_piece>);

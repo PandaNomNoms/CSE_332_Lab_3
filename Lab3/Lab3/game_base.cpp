@@ -8,12 +8,19 @@
 #include "NineAlmonds.h"
 using namespace std;
 
-static gameBase * gameBase::getGame(int argc, char* argv[]) {
-	if (lowerCase(argv[1]) == "ninealmonds") {
-		return &(new NineAlmondsGame(new vector<game_piece>));
+gameBase * gameBase::getGame(int argc, char* argv[]) {
+	if (lowerCase(argv[gameName]) == "ninealmonds") {
+		try {
+			vector<game_piece>* vec = new vector <game_piece>;
+			gameBase* game = new NineAlmondsGame(*vec); 
+			return game; 
+		}
+		catch(...) {
+			throw;
+		}
 	}
 	else {
-		return;
+		return nullptr;
 	}
 }
 
