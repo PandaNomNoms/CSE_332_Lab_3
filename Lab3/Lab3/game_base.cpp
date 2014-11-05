@@ -40,3 +40,37 @@ int gameBase::getLongest() {
 vector<game_piece> gameBase::getBoard() {
 	return board_h;
 }
+
+/*Begin the game*/
+int gameBase::play() {
+	initialize(board_h);
+	print();
+	int counter = 0;
+	bool s;
+	bool d;
+	/*Check if the game is done or if there are any valid moves*/
+	try {
+		while (!(s = stalemate()) && !(d = done())) {
+			turn();
+			counter++;
+		}
+		/*Win condition*/
+		if (d) {
+			cout << "Congratulations, you won!" << endl;
+			cout << counter << " turns played." << endl;
+			return success;
+		}
+		/*Lose condition*/
+		else {
+			cout << "No possible moves left.  You lose." << endl;
+			return staleMate;
+		}
+	}
+	/*Catch if the player quits and throw it up*/
+	catch (int i) {
+		cout << "Quitters never win." << endl;
+		return i;
+	}
+	/*Should be impossible to reach here*/
+	return programLogicError;
+}

@@ -8,43 +8,9 @@
 #include "NineAlmonds.h"
 using namespace std;
 
-NineAlmondsGame::NineAlmondsGame(vector<game_piece> board) {
-	gameBase(board, almond_height, almond_width);
-}
-
-/*Begin the game*/
-int NineAlmondsGame::play() {
-	initialize(board_h);
-	cout << board_h << endl;
-	int counter= 0;
-	bool s;
-	bool d;
-	/*Check if the game is done or if there are any valid moves*/
-	try {
-		while (!(s = stalemate()) && !(d = done())) {
-			turn();
-			counter++;
-		}
-		/*Win condition*/
-		if (d) {
-			cout << "Congratulations, you won!" << endl;
-			cout << counter << " turns played." << endl;
-			return success;
-		}
-		/*Lose condition*/
-		else {
-			cout << "No possible moves left.  You lose." << endl;
-			return staleMate;
-		}
-	}
-	/*Catch if the player quits and throw it up*/
-	catch (int i) {
-		cout << "Quitters never win." << endl;
-		return i;
-	}
-	/*Should be impossible to reach here*/
-	return programLogicError;
-}
+NineAlmondsGame::NineAlmondsGame(vector<game_piece> board)
+	:gameBase(board, almond_height, almond_width)
+{}
 
 void NineAlmondsGame::initialize(vector<game_piece>& board) {
 	/*Create empty board*/
