@@ -8,7 +8,7 @@
 using namespace std;
 
 gameBase::gameBase(vector<game_piece> board, int height, int width)
-:board_h(board), height_h(height), width_h(width)
+	:board_h(board), height_h(height), width_h(width)
 {}
 
 gameBase::gameBase(){}
@@ -33,7 +33,10 @@ int gameBase::getWidth() {
 	return width_h;
 }
 
+int gameBase::getLongest() {
+	return longest;
+}
+
 vector<game_piece> gameBase::getBoard() {
 	return board_h;
 }
-
