@@ -15,6 +15,7 @@ protected:
 	void checkLongest(game_piece g, int &);
 public:
 	virtual void print();
+	virtual void prompt(int&, int&);
 	gameBase(std::vector<game_piece>, int, int);
 	gameBase();
 	int getHeight();
