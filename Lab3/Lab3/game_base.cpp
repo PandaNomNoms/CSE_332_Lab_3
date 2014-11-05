@@ -41,26 +41,36 @@ vector<game_piece> gameBase::getBoard() {
 	return board_h;
 }
 
-void gameBase::prompt(int& a, int& b) {
-	string input;
-	/*Inital prompt for input*/
-	cout << "Enter coordinates (\"x,y\") or quit game (\"quit\"):" << endl;
-	std::cin >> input;
-	/*Throw up if user has chosen to quit*/
-	if (input == "quit") {
-		throw (int)userExit;
-		return;
-	}
-	/*Format the input string*/
-	replace(input.begin(), input.end(), ',', ' ');
-	/*If the string is not valid, reprompt the user until it is*/
-	while (!((istringstream)input >> a >> b)) {
-		cout << "Not a valid input, Enter coordinates (\"x,y\") or quit game (\"quit\"):" << endl;
-		std::cin >> input;
-		if (input == "quit") {
-			throw (int)userExit;
-			return;
+/*Begin the game*/
+int gameBase::play() {
+	initialize(board_h);
+	print();
+	int counter = 0;
+	bool s;
+	bool d;
+	/*Check if the game is done or if there are any valid moves*/
+	try {
+		while (!(s = stalemate()) && !(d = done())) {
+			turn();
+			counter++;
 		}
-		replace(input.begin(), input.end(), ',', ' ');
+		/*Win condition*/
+		if (d) {
+			cout << "Congratulations, you won!" << endl;
+			cout << counter << " turns played." << endl;
+			return success;
+		}
+		/*Lose condition*/
+		else {
+			cout << "No possible moves left.  You lose." << endl;
+			return staleMate;
+		}
 	}
+	/*Catch if the player quits and throw it up*/
+	catch (int i) {
+		cout << "Quitters never win." << endl;
+		return i;
+	}
+	/*Should be impossible to reach here*/
+	return programLogicError;
 }

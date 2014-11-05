@@ -14,8 +14,14 @@ protected:
 	void initiateLongest(vector<game_piece>, int &);
 	void checkLongest(game_piece g, int &);
 public:
-	virtual void print();
-	virtual void prompt(int&, int&);
+	int play();
+	virtual void initialize(std::vector<game_piece>) = 0;
+	virtual void print() = 0;
+	virtual bool done() = 0;
+	virtual bool stalemate() = 0;
+	virtual void prompt() = 0;
+	virtual void turn() = 0;
+	
 	gameBase(std::vector<game_piece>, int, int);
 	gameBase();
 	int getHeight();
