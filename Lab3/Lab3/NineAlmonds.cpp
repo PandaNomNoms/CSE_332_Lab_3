@@ -30,6 +30,7 @@ ostream& operator<< (ostream& o, const NineAlmondsGame& game) {
 	for (int x = 0; x <= game.width_h - 1; x++) {
 		o << setw(game.longest) << x << " ";
 	}
+	o << endl << endl;
 	return o;
 }
 
@@ -99,22 +100,31 @@ bool NineAlmondsGame::stalemate() {
 void NineAlmondsGame::prompt(int& a, int& b) {
 	string input;
 	/*Inital prompt for input*/
-	cout << "Enter coordinates (\"x,y\") or quit game (\"quit\"):" << endl;
-	std::cin >> input;
+	cout << "Enter coordinates (\"x,y\"), end turn (\"end\"), or quit game (\"quit\"):" << endl;
+	cin >> input;
 	/*Throw up if user has chosen to quit*/
-	if (input == "quit") {
+	if (lowerCase(input) == "quit") {
+		cout << "Quitters never win." << endl;
 		throw (int) userExit;
-		return;
+	}
+	/*Throw up if user has chosen to end turn*/
+	else if (lowerCase(input) == "end") {
+		cout << "Turn ended." << endl;
+		throw "end";
 	}
 	/*Format the input string*/
 	replace(input.begin(), input.end(), ',', ' ');
 	/*If the string is not valid, reprompt the user until it is*/
 	while (!((istringstream)input >> a >> b)) {
-		cout << "Not a valid input, Enter coordinates (\"x,y\") or quit game (\"quit\"):" << endl;
-		std::cin >> input;
+		cout << "Not a valid input, Enter coordinates (\"x,y\"), end turn (\"end\"), or quit game (\"quit\"):" << endl;
+		cin >> input;
 		if (input == "quit") {
+			cout << "Quitters never win." << endl;
 			throw (int) userExit;
-			return;
+		}
+		else if (lowerCase(input) == "end") {
+			cout << "Turn ended." << endl;
+			throw "end";
 		}
 		replace(input.begin(), input.end(), ',', ' ');
 	}
@@ -122,13 +132,12 @@ void NineAlmondsGame::prompt(int& a, int& b) {
 
 void NineAlmondsGame::turn() {
 	int x1, y1, x2, y2;
-	/*Prompt user for two sets of coordinates.  Throw up if user has chosen */
+	/*Prompt user for two sets of coordinates.*/
 	try {
 		prompt(x1, y1);
 		prompt(x2, y2);
 	}
-	catch (int n) {
-		throw n;
+	catch (char const*) {
 		return;
 	}
 	/*If the points are not valid, reprompt the user until they are*/
@@ -138,24 +147,26 @@ void NineAlmondsGame::turn() {
 			prompt(x1, y1);
 			prompt(x2, y2);
 		}
-		catch (int n) {
-			throw n;
+		catch (char const*) {
 			return;
 		}
 	}
 	/*Print out the board and ask the user if they wish to continue the turn*/
-	cout << endl << board_h << endl << endl;
+	cout << endl << board_h;
 	string out = to_string(x1) + "," + to_string(y1) + " to " + to_string(x2) + "," + to_string(y2);
-	cout << out << endl << endl;
+	cout << out << endl;
+	if (stalemate() || done()) {
+		return;
+	}
 	string in;
 	cout << "Continue this turn (YyNn)?" << endl;
-	std::cin >> in;
+	cin >> in;
 	in = lowerCase(in);
 	/*If the input is not valid, reprompt the user until it is*/
 	while (in != "no" && in != "n" && in != "yes" && in != "y") {
 		cout << "Invalid input, please try again." << endl;
 		cout << "Continue this turn (YyNn)?" << endl;
-		std::cin >> in;
+		cin >> in;
 	}
 	/*While the user wishes to continue the turn*/
 	while (in == "yes" || in == "y") {
@@ -165,8 +176,7 @@ void NineAlmondsGame::turn() {
 		try {
 			prompt(x2, y2);
 		}
-		catch (int n) {
-			throw n;
+		catch (char const*) {
 			return;
 		}
 		/*If the point is not valid, reprompt until it is*/
@@ -175,26 +185,29 @@ void NineAlmondsGame::turn() {
 			try {
 				prompt(x2, y2);
 			}
-			catch (int n) {
-				throw n;
+			catch (char const*) {
 				return;
 			}
 		}
 		/*Print board and add to the chain of coordinates*/
-		cout << board_h << endl << endl;
+		cout << endl << board_h;
 		string temp = out;
 		string out = temp + " to " + to_string(x2) + "," + to_string(y2);
-		cout << out << endl << endl;
+		cout << out << endl;
+		if (stalemate() || done()) {
+			return;
+		}
 		cout << "Continue this turn (YyNn)?" << endl;
-		std::cin >> in;
+		cin >> in;
 		in = lowerCase(in);
 		/*If the input is not valid, reprompt until it is*/
 		while (in != "no" && in != "n" && in != "yes" && in != "y") {
 			cout << "Invalid input, please try again." << endl;
 			cout << "Continue this turn (YyNn)?" << endl;
-			std::cin >> in;
+			cin >> in;
 		}
 	}
+	cout << "Turn ended." << endl;
 }
 
 bool NineAlmondsGame::valid(int x1, int y1, int x2, int y2) {

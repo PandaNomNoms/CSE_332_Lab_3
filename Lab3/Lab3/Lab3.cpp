@@ -19,5 +19,8 @@ int main(int argc, char* argv[])
 	catch(bad_alloc) {
 		return badMem;
 	}
+	catch (int n) {
+		return n;
+	}
 }
 
