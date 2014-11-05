@@ -4,12 +4,14 @@
 #include <sstream>
 #include <algorithm>
 #include "common.h"
-#include "magic_square.h"
+#include "magicSquare.h"
 using namespace std;
 
-ostream& operator<<(std::ostream& out, const magic_square& game){
-	game.print();
-	
+
+
+ostream& operator<<(std::ostream& out, const magicSquare& game){
+	const gameBase* handler = &game;
+	handler->gameBase::print();
 	cout << "\n";
 	cout << "Available pieces: ";
 	bool print;

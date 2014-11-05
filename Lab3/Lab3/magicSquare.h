@@ -9,8 +9,8 @@ class magicSquare : public gameBase{
 
 public:
 	friend std::ostream& operator<<(std::ostream&, const magicSquare&);
-	magicSquare(std::vector<game_piece> pieces) :gameBase(pieces, 3, 3){
-		
+	magicSquare(std::vector<game_piece> pieces) : gameBase(pieces, 3, 3){
+		std::cout << "the game magic square is constructed" << endl;
 	};
 };
 
