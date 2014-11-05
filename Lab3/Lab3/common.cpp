@@ -4,8 +4,8 @@
 #include "common.h"
 using namespace std;
 
-int height = 5;
-int width = 5;
+int almond_height = 5;
+int almond_width = 5;
 string name = "brown almond";
 string display = "A";
 
