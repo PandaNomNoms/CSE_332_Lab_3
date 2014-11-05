@@ -33,7 +33,7 @@
     <ClInclude Include="game_piece.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="magic_square.h">
+    <ClInclude Include="NineAlmonds.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -53,7 +53,7 @@
     <ClCompile Include="game_base.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="magic_square.cpp">
+    <ClCompile Include="NineAlmonds.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
