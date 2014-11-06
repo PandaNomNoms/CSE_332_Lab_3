@@ -69,3 +69,37 @@ int gameBase::play() {
 	/*Should be impossible to reach here*/
 	return programLogicError;
 }
+
+/*Prompt for NineAlmonds*/
+void gameBase::prompt(int& a, int& b) {
+	string input;
+	/*Inital prompt for input*/
+	cout << "Enter coordinates (\"x,y\"), end turn (\"end\"), or quit game (\"quit\"):" << endl;
+	cin >> input;
+	/*Throw up if user has chosen to quit*/
+	if (lowerCase(input) == "quit") {
+		cout << "Quitters never win." << endl;
+		throw (int)userExit;
+	}
+	/*Throw up if user has chosen to end turn*/
+	else if (lowerCase(input) == "end") {
+		cout << "Turn ended." << endl;
+		throw "end";
+	}
+	/*Format the input string*/
+	replace(input.begin(), input.end(), ',', ' ');
+	/*If the string is not valid, reprompt the user until it is*/
+	while (!((istringstream)input >> a >> b)) {
+		cout << "Not a valid input, Enter coordinates (\"x,y\"), end turn (\"end\"), or quit game (\"quit\"):" << endl;
+		cin >> input;
+		if (input == "quit") {
+			cout << "Quitters never win." << endl;
+			throw (int)userExit;
+		}
+		else if (lowerCase(input) == "end") {
+			cout << "Turn ended." << endl;
+			throw "end";
+		}
+		replace(input.begin(), input.end(), ',', ' ');
+	}
+}

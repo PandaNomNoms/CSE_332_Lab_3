@@ -12,13 +12,13 @@ void magicSquare::print(){
 	cout << *this;
 }
 
-magicSquare::magicSquare(std::vector<game_piece> pieces) : gameBase(pieces, 4, 4) {}
+magicSquare::magicSquare(std::vector<game_piece> pieces) : gameBase(pieces, magicsquare_height, magicsquare_width) {}
 
-void initialize(std::vector<game_piece>& pieces) {
-	for (int i = 1; i < 10; i++){
-		pieces.insert[i];
+void magicSquare::initialize(vector<game_piece>& pieces) {
+	for (int i = 0; i < (magicsquare_height*magicsquare_width); i++){
+		pieces.push_back(game_piece("empty", " "));
 	}
-	std::cout << "the game magic square is constructed" << endl;
+	cout << "The game magic square is constructed." << endl;
 }
 
 ostream& operator<<(std::ostream& o, const magicSquare& game){
@@ -112,13 +112,13 @@ void magicSquare::turn() {
 		}
 		int x, y;
 		gameBase::prompt(x, y);
-		while (x<0 || x>2 || y<0 || y>2 || board_h[(y + 1) * 4 + x + 1].name_h.length == 1){
+		while (x<0 || x>2 || y<0 || y>2 || board_h[(y + 1) * magicsquare_width + x + 1].name_h.length() == 1){
 			cout << "Your input is not valid" << endl;
 			gameBase::prompt(x, y);
 		}
 		cout << "you decided to put piece " << piece << " at coordinate " << x << ", " << y << endl;
-		board_h[(y + 1) * 4 + x + 1].display_h = " ";
-		board_h[(y + 1) * 4 + x + 1].name_h = "empty";
+		board_h[(y + 1) * magicsquare_width + x + 1].display_h = " ";
+		board_h[(y + 1) * magicsquare_width + x + 1].name_h = "empty";
 		availablePieces.erase(piece);
 		return;
 	}
