@@ -104,8 +104,6 @@ void magicSquare::prompt(unsigned int &num){
 	}
 }
 
-
-
 void magicSquare::turn() {
 	try{
 		unsigned int piece;

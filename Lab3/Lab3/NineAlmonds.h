@@ -13,7 +13,6 @@ public:
 	int play();
 	bool done();
 	bool stalemate();
-	void prompt(int&, int&);
 	void turn();
 	bool valid(int, int, int, int);
 	void print();
