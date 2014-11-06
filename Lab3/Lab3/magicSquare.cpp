@@ -26,6 +26,7 @@ void magicSquare::initialize(vector<game_piece>& pieces) {
 
 ostream& operator<<(std::ostream& o, const magicSquare& game){
 	int index;
+	cout << endl;
 	/*Print row*/
 	for (int y = game.height_h - 1; y >= 0; y--) {
 		/*Print y-axis*/
@@ -47,7 +48,7 @@ ostream& operator<<(std::ostream& o, const magicSquare& game){
 	for (int i : game.availablePieces){
 		cout << i << " ";
 	}
-	cout << endl;
+	cout << endl << endl;
 	return o;
 }
 
@@ -55,36 +56,33 @@ bool magicSquare::done(){
 
 	for (game_piece piece : board_h){
 		if (piece.name_h.length() != 1){
-			cout << "piece not all used" << endl;
 			return false;
 		}
 	}
 	for (int height = 0; height < magicsquare_height; height++){
-		if (stoi(board_h[height * (magicsquare_width) + 1].name_h) + stoi(board_h[height * (magicsquare_width) + 2].name_h) + stoi(board_h[height * (magicsquare_width) + 3].name_h) != 15){
-			cout << "not all rows sum up to 15"<< endl;
+		if (stoi(board_h[height * (magicsquare_width)+1].name_h) + stoi(board_h[height * (magicsquare_width)+2].name_h) + stoi(board_h[height * (magicsquare_width)+3].name_h) != 15){
 			return false;
 		}
 	}
-	for (int width = 0; width < magicsquare_width;width++){
-		if (stoi(board_h[(magicsquare_height) + width].name_h) + stoi(board_h[2 * (magicsquare_height) + width].name_h) + stoi(board_h[3 * (magicsquare_height) + width].name_h) != 15){
-			cout <<"not all columns sum up to 15" << endl;
+	for (int width = 0; width < magicsquare_width; width++){
+		if (stoi(board_h[(magicsquare_height)+width].name_h) + stoi(board_h[2 * (magicsquare_height)+width].name_h) + stoi(board_h[3 * (magicsquare_height)+width].name_h) != 15){
 			return false;
 		}
 	}
 	if (stoi(board_h[0].name_h) + stoi(board_h[8].name_h) + stoi(board_h[4].name_h) != 15){
-		cout << "the bottom left top right diagonal line is not 15"<< endl;
 		return false;
 	}
 	if (stoi(board_h[2].name_h) + stoi(board_h[6].name_h) + stoi(board_h[4].name_h) != 15){
-		cout << "the bottom right top left diagonal line is not 15" << endl;
 		return false;
 	}
 	return true;
 }
 
 bool magicSquare::stalemate(){
-	if (availablePieces.size() != 0){
-		cout << "still pieces to use"<< endl;
+	for (game_piece piece : board_h){
+		if (piece.name_h.length() != 1){
+			return false;
+		}
 	}
 	return !done();
 }
@@ -92,22 +90,22 @@ bool magicSquare::stalemate(){
 void magicSquare::prompt(unsigned int &num){
 	string input;
 	/*Inital prompt for input*/
-	cout << "Enter a piece:" << endl;
+	cout << "Enter a piece(\"n\") or quit(\"quit\"):" << endl;
 	std::cin >> input;
 	/*Throw up if user has chosen to quit*/
 	if (lowerCase(input) == "quit") {
+		cout << "Quitters never win." << endl;
 		throw (int)userExit;
 	}
-	while (!((istringstream)input >> num )){
-		cout << "Your input is not valid! Either not a number or the piece is not available" << endl;
+	while (!((istringstream)input >> num) || (int)num > (magicsquare_height*magicsquare_width) || (int)num < 0) {
+		cout << "Your input is not valid! Either not a number, not a valid piece, or the piece is not available" << endl;
 		std::cin >> input;
 		if (lowerCase(input) == "quit") {
-			throw (int) userExit;
+			cout << "Quitters never win." << endl;
+			throw (int)userExit;
 		}
 	}
 }
-
-
 
 void magicSquare::turn() {
 	try{
@@ -119,20 +117,18 @@ void magicSquare::turn() {
 		}
 		int x, y;
 		gameBase::prompt(x, y);
-		while (x < 0 || x > (magicsquare_width) || y < 0 || y > (magicsquare_height) || board_h[(y ) * magicsquare_width + x].name_h.length() == 1){
-			cout << "Your input is not valid" << endl;
+		while (!(board_h[y * magicsquare_width + x].name_h == "empty")) {
+			cout << "The coordinate is not available." << endl;
 			gameBase::prompt(x, y);
 		}
 		cout << "You decided to put piece " << piece << " at coordinate " << x << ", " << y << endl;
-		board_h[(y ) * magicsquare_width + x].display_h = to_string(piece);
-		board_h[(y ) * magicsquare_width + x].name_h = to_string(piece);
+		board_h[y * magicsquare_width + x].display_h = to_string(piece);
+		board_h[y * magicsquare_width + x].name_h = to_string(piece);
 		availablePieces.erase(piece);
-		print();
+		magicSquare::print();
 		return;
 	}
-	catch(int x){
-		cout << "Quitters never win" << endl;
-		throw (int)userExit;
-	}
+	catch (char const*) {
 
+	}
 }
