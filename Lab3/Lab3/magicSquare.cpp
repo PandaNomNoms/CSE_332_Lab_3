@@ -89,13 +89,13 @@ bool magicSquare::stalemate(){
 void magicSquare::prompt(unsigned int &num){
 	string input;
 	/*Inital prompt for input*/
-	cout << "Enter coordinates (\"x,y\") or quit game (\"quit\"):" << endl;
+	cout << "Enter a piece:" << endl;
 	std::cin >> input;
 	/*Throw up if user has chosen to quit*/
 	if (lowerCase(input) == "quit") {
 		throw (int)userExit;
 	}
-	while (!(istringstream)input >> num || availablePieces.find(num) == availablePieces.end()){
+	while (!(istringstream)input >> num){
 		cout << "Your input is not valid! Either not a number or the piece is not available" << endl;
 		std::cin >> input;
 		if (lowerCase(input) == "quit") {
