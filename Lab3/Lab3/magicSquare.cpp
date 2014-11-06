@@ -12,13 +12,13 @@ void magicSquare::print(){
 	cout << *this;
 }
 
-magicSquare::magicSquare(std::vector<game_piece> pieces) : gameBase(pieces, magicsquare_height-1, magicsquare_width-1) {}
+magicSquare::magicSquare(std::vector<game_piece> pieces) : gameBase(pieces, magicsquare_height, magicsquare_width) {}
 
 void magicSquare::initialize(vector<game_piece>& pieces) {
-	for (int i = 0; i < (magicsquare_height*magicsquare_width); i++){
+	for (int i = 0; i < ((magicsquare_height + 1) * (magicsquare_width + 1)); i++){
 		pieces.push_back(game_piece("empty", " "));
 	}
-	for (int i = 1; i <= ((magicsquare_height-1)*(magicsquare_width-1)); i++){
+	for (int i = 1; i <= ((magicsquare_height)*(magicsquare_width)); i++){
 		availablePieces.insert(i);
 	}
 	cout << "The game magic square is constructed." << endl;
@@ -59,12 +59,12 @@ bool magicSquare::done(){
 		}
 	}
 	for (int height = 1; height < 4; height++){
-		if (stoi(board_h[height * magicsquare_width + 1].name_h) + stoi(board_h[height * magicsquare_width + 2].name_h) + stoi(board_h[height * magicsquare_width + 3].name_h) != 15){
+		if (stoi(board_h[height * (magicsquare_width + 1) + 1].name_h) + stoi(board_h[height * (magicsquare_width + 1) + 2].name_h) + stoi(board_h[height * (magicsquare_width + 1) + 3].name_h) != 15){
 			return false;
 		}
 	}
 	for (int width = 1; width < 4;width++){
-		if (stoi(board_h[magicsquare_height + width].name_h) + stoi(board_h[2 * magicsquare_height + width].name_h) + stoi(board_h[3 * magicsquare_height + width].name_h) != 15){
+		if (stoi(board_h[(magicsquare_height + 1) + width].name_h) + stoi(board_h[2 * (magicsquare_height + 1) + width].name_h) + stoi(board_h[3 * (magicsquare_height + 1) + width].name_h) != 15){
 			return false;
 		}
 	}
@@ -116,20 +116,19 @@ void magicSquare::turn() {
 		}
 		int x, y;
 		gameBase::prompt(x, y);
-		while (x<0 || x>2 || y<0 || y>2 || board_h[(y + 1) * magicsquare_width + x + 1].name_h.length() == 1){
+		while (x < 0 || x > (magicsquare_width-1) || y < 0 || y > (magicsquare_height-1) || board_h[(y + 1) * magicsquare_width + x + 2].name_h.length() == 1){
 			cout << "Your input is not valid" << endl;
 			gameBase::prompt(x, y);
 		}
-		cout << "you decided to put piece " << piece << " at coordinate " << x << ", " << y << endl;
+		cout << "You decided to put piece " << piece << " at coordinate " << x << ", " << y << endl;
 		board_h[(y + 1) * magicsquare_width + x + 1].display_h = " ";
 		board_h[(y + 1) * magicsquare_width + x + 1].name_h = "empty";
 		availablePieces.erase(piece);
 		return;
 	}
 	catch(int x){
-		cout << "you decide to quit the game " << endl;
-		
-		return;
+		cout << "Quitters never win" << endl;
+		throw (int)userExit;
 	}
 
 }
