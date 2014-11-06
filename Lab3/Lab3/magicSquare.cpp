@@ -104,6 +104,8 @@ void magicSquare::prompt(unsigned int &num){
 	}
 }
 
+
+
 void magicSquare::turn() {
 	try{
 		unsigned int piece;
@@ -124,8 +126,9 @@ void magicSquare::turn() {
 		availablePieces.erase(piece);
 		return;
 	}
-	catch(int){
+	catch(int x){
 		cout << "you decide to quit the game " << endl;
+		
 		return;
 	}
 
