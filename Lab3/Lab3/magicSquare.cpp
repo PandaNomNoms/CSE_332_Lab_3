@@ -9,15 +9,18 @@
 using namespace std;
 
 void magicSquare::print(){
-	cout<<this;
+	cout << *this;
 }
-magicSquare::magicSquare(std::vector<game_piece> pieces) : gameBase(pieces, 4, 4){
-	
+
+magicSquare::magicSquare(std::vector<game_piece> pieces) : gameBase(pieces, 4, 4) {}
+
+void initialize(std::vector<game_piece>& pieces) {
 	for (int i = 1; i < 10; i++){
-		availablePieces.insert(i);
+		pieces.insert[i];
 	}
 	std::cout << "the game magic square is constructed" << endl;
-};
+}
+
 ostream& operator<<(std::ostream& o, const magicSquare& game){
 	int index;
 	/*Print row*/
@@ -97,4 +100,8 @@ void magicSquare::prompt(unsigned int &num){
 			return;
 		}
 	}
+}
+
+void magicSquare::turn() {
+
 }

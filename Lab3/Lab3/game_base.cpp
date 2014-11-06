@@ -6,13 +6,19 @@
 #include "common.h"
 #include "game_base.h"
 #include "NineAlmonds.h"
+#include "magicSquare.h"
 using namespace std;
 
 gameBase * gameBase::getGame(int argc, char* argv[]) {
 	if (lowerCase(argv[gameName]) == "ninealmonds") {
-		vector<game_piece>* vec = new vector <game_piece>;
+		vector<game_piece>* vec = new vector<game_piece>;
 		gameBase* game = new NineAlmondsGame(*vec); 
 		return game; 
+	}
+	else if (lowerCase(argv[gameName]) == "magicsquare") {
+		vector<game_piece>* vec = new vector<game_piece>;
+		gameBase* game = new magicSquare(*vec);
+		return game;
 	}
 	else {
 		return nullptr;

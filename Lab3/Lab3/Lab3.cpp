@@ -9,6 +9,7 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
+	vector<game_piece> board;
 	try {
 		shared_ptr<gameBase> ptr(gameBase::getGame(argc, argv));
 		if (ptr == nullptr) {

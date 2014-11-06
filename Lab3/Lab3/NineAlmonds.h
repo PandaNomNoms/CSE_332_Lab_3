@@ -9,7 +9,7 @@ class NineAlmondsGame : public gameBase {
 	friend std::ostream& operator<< (std::ostream&, const NineAlmondsGame&);
 	void initialize(std::vector<game_piece>&);
 public:
-	NineAlmondsGame(std::vector<game_piece>);
+	NineAlmondsGame(std::vector<game_piece>&);
 	int play();
 	bool done();
 	bool stalemate();

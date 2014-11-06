@@ -8,9 +8,7 @@
 #include "NineAlmonds.h"
 using namespace std;
 
-NineAlmondsGame::NineAlmondsGame(vector<game_piece> board)
-	:gameBase(board, almond_height, almond_width)
-{}
+NineAlmondsGame::NineAlmondsGame(vector<game_piece>& board) : gameBase(board, almond_height, almond_width) {}
 
 ostream& operator<< (ostream& o, const NineAlmondsGame& game) {
 	int index;
