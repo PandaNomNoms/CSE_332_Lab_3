@@ -9,6 +9,9 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
+	if (argc > inputNumber) {
+		return usage(argv[programName]);
+	}
 	/*Game board*/
 	vector<game_piece> board;
 	try {
@@ -16,7 +19,7 @@ int main(int argc, char* argv[])
 		shared_ptr<gameBase> ptr(gameBase::getGame(argc, argv));
 		if (ptr == nullptr) {
 			/*Error if input incorrect*/
-			return usage(argv[programName]);
+			return invalidArg(argv[gameName]);
 		}
 		return (*ptr).play();
 	}

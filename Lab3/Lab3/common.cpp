@@ -16,13 +16,13 @@ string display = "A";
 
 /*Tells user how to properly use the program*/
 int usage(char * c) {
-	cout << "Usage: $" << c << " NineAlmonds" << endl;
+	cout << "Usage: $" << c << " NineAlmonds " << endl << "or" << endl << "$" << c << " MagicSquare" << endl;
 	return wrongNumberOfArg;
 }
 
 /*Tells user if argument is invalid*/
 int invalidArg(char * c) {
-	cout << "Error: " << c << " is not a valid argument.  Use \"NineAlmonds\"" << endl;
+	cout << "Error: " << c << " is not a valid argument.  Use \"NineAlmonds\" or \"MagicSquare\"" << endl;
 	return invalidArgument;
 }
 
