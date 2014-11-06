@@ -54,36 +54,39 @@ ostream& operator<<(std::ostream& o, const magicSquare& game){
 
 bool magicSquare::done(){
 
-	for (game_piece piece : board_h){
-		if (piece.name_h.length() != 1){
-			return false;
-		}
+	if (availablePieces.size() != 0){
+		cout << "piece unused"<<endl;
+		return false;
 	}
 	for (int height = 0; height < magicsquare_height; height++){
 		if (stoi(board_h[height * (magicsquare_width)+1].name_h) + stoi(board_h[height * (magicsquare_width)+2].name_h) + stoi(board_h[height * (magicsquare_width)+3].name_h) != 15){
+			cout << "rows not all 15";
 			return false;
 		}
 	}
 	for (int width = 0; width < magicsquare_width; width++){
 		if (stoi(board_h[(magicsquare_height)+width].name_h) + stoi(board_h[2 * (magicsquare_height)+width].name_h) + stoi(board_h[3 * (magicsquare_height)+width].name_h) != 15){
+			cout << "cols not all 15";
 			return false;
 		}
 	}
 	if (stoi(board_h[0].name_h) + stoi(board_h[8].name_h) + stoi(board_h[4].name_h) != 15){
+		cout << "positive diagonal not 15";
 		return false;
 	}
 	if (stoi(board_h[2].name_h) + stoi(board_h[6].name_h) + stoi(board_h[4].name_h) != 15){
+		cout << "negative diagobal not 15";
 		return false;
 	}
 	return true;
 }
 
 bool magicSquare::stalemate(){
-	for (game_piece piece : board_h){
-		if (piece.name_h.length() != 1){
-			return false;
-		}
+	if (availablePieces.size() != 0){
+		
+		return false;
 	}
+	cout << "all pieces used" << endl;
 	return !done();
 }
 
