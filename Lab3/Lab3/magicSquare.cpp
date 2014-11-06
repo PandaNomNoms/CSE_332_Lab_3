@@ -79,11 +79,10 @@ bool magicSquare::done(){
 }
 
 bool magicSquare::stalemate(){
-	for (game_piece piece : board_h){
-		if (piece.name_h.length() != 1){
-			return false;
-		}
+	if (availablePieces.size() != 0){
+		return false;
 	}
+	cout << "All pieces used" << endl;
 	return !done();
 }
 
