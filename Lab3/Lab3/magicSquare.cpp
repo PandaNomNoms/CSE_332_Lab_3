@@ -95,11 +95,11 @@ void magicSquare::prompt(unsigned int &num){
 	if (lowerCase(input) == "quit") {
 		throw (int)userExit;
 	}
-	while (!(istringstream)input >> num){
-		cout << "Your input is not valid! Either not a number or the piece is not available" << endl;
+	while (!((istringstream)input >> num) || (int)num > (magicsquare_height*magicsquare_width) || (int)num < 0) {
+		cout << "Your input is not valid! Either not a number, not a valid piece, or the piece is not available" << endl;
 		std::cin >> input;
 		if (lowerCase(input) == "quit") {
-			throw (int) userExit;
+			throw (int)userExit;
 		}
 	}
 }
@@ -115,7 +115,7 @@ void magicSquare::turn() {
 		int x, y;
 		gameBase::prompt(x, y);
 		while (x < 0 || x > (magicsquare_width-1) || y < 0 || y > (magicsquare_height-1) || board_h[(y + 1) * magicsquare_width + x + 2].name_h.length() == 1){
-			cout << "Your input is not valid" << endl;
+			cout << "Invalid coordinate" << endl;
 			gameBase::prompt(x, y);
 		}
 		cout << "You decided to put piece " << piece << " at coordinate " << x << ", " << y << endl;
@@ -124,9 +124,7 @@ void magicSquare::turn() {
 		availablePieces.erase(piece);
 		return;
 	}
-	catch(int x){
-		cout << "Quitters never win" << endl;
-		throw (int)userExit;
+	catch (char const*) {
+		cout << "While you could take your next turn, you might as well use this one.";
 	}
-
 }
