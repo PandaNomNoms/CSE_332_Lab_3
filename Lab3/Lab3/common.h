@@ -5,6 +5,8 @@
 
 extern int almond_height;
 extern int almond_width;
+extern int magicsquare_height;
+extern int magicsquare_width;
 extern std::string name;
 extern std::string display;
 

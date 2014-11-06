@@ -6,6 +6,8 @@ using namespace std;
 
 int almond_height = 5;
 int almond_width = 5;
+int magicsquare_height = 4;
+int magicsquare_width = 4;
 string name = "brown almond";
 string display = "A";
 

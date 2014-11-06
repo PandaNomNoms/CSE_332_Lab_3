@@ -70,6 +70,7 @@ int gameBase::play() {
 	return programLogicError;
 }
 
+/*Prompt for NineAlmonds*/
 void gameBase::prompt(int& a, int& b) {
 	string input;
 	/*Inital prompt for input*/
