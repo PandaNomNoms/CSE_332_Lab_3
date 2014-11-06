@@ -55,33 +55,36 @@ bool magicSquare::done(){
 
 	for (game_piece piece : board_h){
 		if (piece.name_h.length() != 1){
+			cout << "piece not all used" << endl;
 			return false;
 		}
 	}
 	for (int height = 0; height < magicsquare_height; height++){
 		if (stoi(board_h[height * (magicsquare_width) + 1].name_h) + stoi(board_h[height * (magicsquare_width) + 2].name_h) + stoi(board_h[height * (magicsquare_width) + 3].name_h) != 15){
+			cout << "not all rows sum up to 15"<< endl;
 			return false;
 		}
 	}
 	for (int width = 0; width < magicsquare_width;width++){
 		if (stoi(board_h[(magicsquare_height) + width].name_h) + stoi(board_h[2 * (magicsquare_height) + width].name_h) + stoi(board_h[3 * (magicsquare_height) + width].name_h) != 15){
+			cout <<"not all columns sum up to 15" << endl;
 			return false;
 		}
 	}
 	if (stoi(board_h[0].name_h) + stoi(board_h[8].name_h) + stoi(board_h[4].name_h) != 15){
+		cout << "the bottom left top right diagonal line is not 15"<< endl;
 		return false;
 	}
 	if (stoi(board_h[2].name_h) + stoi(board_h[6].name_h) + stoi(board_h[4].name_h) != 15){
+		cout << "the bottom right top left diagonal line is not 15" << endl;
 		return false;
 	}
 	return true;
 }
 
 bool magicSquare::stalemate(){
-	for (game_piece piece : board_h){
-		if (piece.name_h.length() != 1){
-			return false;
-		}
+	if (availablePieces.size() != 0){
+		cout << "still pieces to use"<< endl;
 	}
 	return !done();
 }
