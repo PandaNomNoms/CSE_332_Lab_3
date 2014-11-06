@@ -45,34 +45,38 @@ ostream& operator<<(std::ostream& o, const magicSquare& game){
 	}
 	o << endl;
 	o << "Available pieces: ";
-	for (int i : game.availablePieces){
+	for (int i : game.availablePieces) { 
 		cout << i << " ";
 	}
 	cout << endl << endl;
 	return o;
 }
 
-bool magicSquare::done(){
 
-	for (game_piece piece : board_h){
-		if (piece.name_h == "empty"){
+
+bool magicSquare::done(){
+// Test string: 2 0,2 9 0,1 4 0,0 7 1,2 5 1,1 3 1,0 6 2,2 1 2,1 8 2,0
+	for (int x = 0; x < magicsquare_width; x++) {
+		for (int y = 0; y < magicsquare_height; y++) {
+			if (board_h[y*magicsquare_width + x].name_h == "empty"){
+				return false;
+			}
+		}
+	}
+	for (int height = 0; height < magicsquare_height; height++){
+		if (stoi(board_h[height * magicsquare_width].name_h) + stoi(board_h[height * magicsquare_width + 1].name_h) + stoi(board_h[height * magicsquare_width + 2].name_h) != magicsum){
 			return false;
 		}
 	}
-	for (int height = 1; height < magicsquare_height; height++){
-		if (stoi(board_h[height * magicsquare_width + 1].name_h) + stoi(board_h[height * magicsquare_width + 2].name_h) + stoi(board_h[height * magicsquare_width + 3].name_h) != magicsum){
+	for (int width = 0; width < magicsquare_width; width++){
+		if (stoi(board_h[width].name_h) + stoi(board_h[magicsquare_height + width].name_h) + stoi(board_h[2 * (magicsquare_height) + width].name_h) != magicsum){
 			return false;
 		}
 	}
-	for (int width = 1; width < magicsquare_width; width++){
-		if (stoi(board_h[(magicsquare_height) + width].name_h) + stoi(board_h[2 * (magicsquare_height)+width].name_h) + stoi(board_h[3 * (magicsquare_height)+width].name_h) != magicsum){
-			return false;
-		}
-	}
-	if (stoi(board_h[5].name_h) + stoi(board_h[10].name_h) + stoi(board_h[15].name_h) != magicsum){
+	if (stoi(board_h[0].name_h) + stoi(board_h[4].name_h) + stoi(board_h[8].name_h) != magicsum){
 		return false;
 	}
-	if (stoi(board_h[13].name_h) + stoi(board_h[10].name_h) + stoi(board_h[7].name_h) != magicsum){
+	if (stoi(board_h[6].name_h) + stoi(board_h[4].name_h) + stoi(board_h[2].name_h) != magicsum){
 		return false;
 	}
 	return true;
@@ -116,7 +120,7 @@ void magicSquare::turn() {
 		}
 		int x, y;
 		gameBase::prompt(x, y);
-		while ((!(board_h[y * magicsquare_width + x].name_h == "empty")) || (x > magicsquare_width) || (y > magicsquare_height)) {
+		while ((board_h[y * magicsquare_width + x].name_h != "empty") || (x >= magicsquare_width) || (y >= magicsquare_height)) {
 			cout << "The coordinate is not available." << endl;
 			gameBase::prompt(x, y);
 		}
