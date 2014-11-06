@@ -12,11 +12,14 @@ void magicSquare::print(){
 	cout << *this;
 }
 
-magicSquare::magicSquare(std::vector<game_piece> pieces) : gameBase(pieces, magicsquare_height, magicsquare_width) {}
+magicSquare::magicSquare(std::vector<game_piece> pieces) : gameBase(pieces, magicsquare_height-1, magicsquare_width-1) {}
 
 void magicSquare::initialize(vector<game_piece>& pieces) {
 	for (int i = 0; i < (magicsquare_height*magicsquare_width); i++){
 		pieces.push_back(game_piece("empty", " "));
+	}
+	for (int i = 1; i <= ((magicsquare_height-1)*(magicsquare_width-1)); i++){
+		availablePieces.insert(i);
 	}
 	cout << "The game magic square is constructed." << endl;
 }
@@ -39,11 +42,12 @@ ostream& operator<<(std::ostream& o, const magicSquare& game){
 	for (int x = 0; x <= game.height_h - 1; x++) {
 		o << setw(game.longest) << x << " ";
 	}
-	o << "\n";
+	o << endl;
 	o << "Available pieces: ";
 	for (int i : game.availablePieces){
 		cout << i << " ";
 	}
+	cout << endl;
 	return o;
 }
 
@@ -55,12 +59,12 @@ bool magicSquare::done(){
 		}
 	}
 	for (int height = 1; height < 4; height++){
-		if (stoi(board_h[height * 4 + 1].name_h) + stoi(board_h[height * 4 + 2].name_h) + stoi(board_h[height * 4 + 3].name_h) != 15){
+		if (stoi(board_h[height * magicsquare_width + 1].name_h) + stoi(board_h[height * magicsquare_width + 2].name_h) + stoi(board_h[height * magicsquare_width + 3].name_h) != 15){
 			return false;
 		}
 	}
 	for (int width = 1; width < 4;width++){
-		if (stoi(board_h[4 + width].name_h) + stoi(board_h[2 * 4 + width].name_h) + stoi(board_h[3 * 4 + width].name_h) != 15){
+		if (stoi(board_h[magicsquare_height + width].name_h) + stoi(board_h[2 * magicsquare_height + width].name_h) + stoi(board_h[3 * magicsquare_height + width].name_h) != 15){
 			return false;
 		}
 	}
@@ -88,16 +92,14 @@ void magicSquare::prompt(unsigned int &num){
 	cout << "Enter coordinates (\"x,y\") or quit game (\"quit\"):" << endl;
 	std::cin >> input;
 	/*Throw up if user has chosen to quit*/
-	if (input == "quit") {
+	if (lowerCase(input) == "quit") {
 		throw (int)userExit;
-		return;
 	}
 	while (!(istringstream)input >> num || availablePieces.find(num) == availablePieces.end()){
-		cout << "your input is not valid! Either not a number or the piece is not available" << endl;
+		cout << "Your input is not valid! Either not a number or the piece is not available" << endl;
 		std::cin >> input;
-		if (input == "quit") {
-			throw (int)userExit;
-			return;
+		if (lowerCase(input) == "quit") {
+			throw (int) userExit;
 		}
 	}
 }
