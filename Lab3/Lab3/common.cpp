@@ -8,6 +8,7 @@ int almond_height = 5;
 int almond_width = 5;
 int magicsquare_height = 3;
 int magicsquare_width = 3;
+int magicsum = 15;
 string name = "brown almond";
 string display = "A";
 

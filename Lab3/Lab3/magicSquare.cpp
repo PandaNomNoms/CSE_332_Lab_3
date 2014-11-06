@@ -55,24 +55,24 @@ ostream& operator<<(std::ostream& o, const magicSquare& game){
 bool magicSquare::done(){
 
 	for (game_piece piece : board_h){
-		if (piece.name_h.length() != 1){
+		if (piece.name_h == "empty"){
 			return false;
 		}
 	}
-	for (int height = 0; height < magicsquare_height; height++){
-		if (stoi(board_h[height * (magicsquare_width)+1].name_h) + stoi(board_h[height * (magicsquare_width)+2].name_h) + stoi(board_h[height * (magicsquare_width)+3].name_h) != 15){
+	for (int height = 1; height < magicsquare_height; height++){
+		if (stoi(board_h[height * magicsquare_width + 1].name_h) + stoi(board_h[height * magicsquare_width + 2].name_h) + stoi(board_h[height * magicsquare_width + 3].name_h) != magicsum){
 			return false;
 		}
 	}
-	for (int width = 0; width < magicsquare_width; width++){
-		if (stoi(board_h[(magicsquare_height)+width].name_h) + stoi(board_h[2 * (magicsquare_height)+width].name_h) + stoi(board_h[3 * (magicsquare_height)+width].name_h) != 15){
+	for (int width = 1; width < magicsquare_width; width++){
+		if (stoi(board_h[(magicsquare_height) + width].name_h) + stoi(board_h[2 * (magicsquare_height)+width].name_h) + stoi(board_h[3 * (magicsquare_height)+width].name_h) != magicsum){
 			return false;
 		}
 	}
-	if (stoi(board_h[0].name_h) + stoi(board_h[8].name_h) + stoi(board_h[4].name_h) != 15){
+	if (stoi(board_h[5].name_h) + stoi(board_h[10].name_h) + stoi(board_h[15].name_h) != magicsum){
 		return false;
 	}
-	if (stoi(board_h[2].name_h) + stoi(board_h[6].name_h) + stoi(board_h[4].name_h) != 15){
+	if (stoi(board_h[13].name_h) + stoi(board_h[10].name_h) + stoi(board_h[7].name_h) != magicsum){
 		return false;
 	}
 	return true;
@@ -117,7 +117,7 @@ void magicSquare::turn() {
 		}
 		int x, y;
 		gameBase::prompt(x, y);
-		while (!(board_h[y * magicsquare_width + x].name_h == "empty")) {
+		while ((!(board_h[y * magicsquare_width + x].name_h == "empty")) || (x > magicsquare_width) || (y > magicsquare_height)) {
 			cout << "The coordinate is not available." << endl;
 			gameBase::prompt(x, y);
 		}
