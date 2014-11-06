@@ -59,20 +59,20 @@ bool magicSquare::done(){
 			return false;
 		}
 	}
-	for (int height = 1; height < 4; height++){
-		if (stoi(board_h[height * (magicsquare_width + 1) + 1].name_h) + stoi(board_h[height * (magicsquare_width + 1) + 2].name_h) + stoi(board_h[height * (magicsquare_width + 1) + 3].name_h) != 15){
+	for (int height = 0; height < magicsquare_height; height++){
+		if (stoi(board_h[height * (magicsquare_width)+1].name_h) + stoi(board_h[height * (magicsquare_width)+2].name_h) + stoi(board_h[height * (magicsquare_width)+3].name_h) != 15){
 			return false;
 		}
 	}
-	for (int width = 1; width < 4;width++){
-		if (stoi(board_h[(magicsquare_height + 1) + width].name_h) + stoi(board_h[2 * (magicsquare_height + 1) + width].name_h) + stoi(board_h[3 * (magicsquare_height + 1) + width].name_h) != 15){
+	for (int width = 0; width < magicsquare_width; width++){
+		if (stoi(board_h[(magicsquare_height)+width].name_h) + stoi(board_h[2 * (magicsquare_height)+width].name_h) + stoi(board_h[3 * (magicsquare_height)+width].name_h) != 15){
 			return false;
 		}
 	}
-	if (stoi(board_h[5].name_h) + stoi(board_h[15].name_h) + stoi(board_h[10].name_h) != 15){
+	if (stoi(board_h[0].name_h) + stoi(board_h[8].name_h) + stoi(board_h[4].name_h) != 15){
 		return false;
 	}
-	if (stoi(board_h[12].name_h) + stoi(board_h[7].name_h) + stoi(board_h[10].name_h) != 15){
+	if (stoi(board_h[2].name_h) + stoi(board_h[6].name_h) + stoi(board_h[4].name_h) != 15){
 		return false;
 	}
 	return true;
