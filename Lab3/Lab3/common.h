@@ -9,7 +9,7 @@ extern std::string name;
 extern std::string display;
 
 enum indices { programName, gameName, inputNumber };
-enum result { success, wrongNumberOfArg, invalidFileName, invalidArgument, couldNotRead, couldNotExtract, noWellFormedDefinitions, dimensionsMismatch, userExit, staleMate, programLogicError };
+enum result { success, wrongNumberOfArg, invalidFileName, invalidArgument, couldNotRead, couldNotExtract, noWellFormedDefinitions, dimensionsMismatch, userExit, staleMate, programLogicError, badMem };
 int usage(char *);
 int invalidFile(char *);
 int invalidArg(char *);

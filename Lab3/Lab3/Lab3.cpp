@@ -2,10 +2,26 @@
 //
 
 #include "stdafx.h"
+#include "game_base.h"
+#include "common.h"
+#include <memory>
+using namespace std;
 
-
-int _tmain(int argc, _TCHAR* argv[])
+int main(int argc, char* argv[])
 {
-	return 0;
+	vector<game_piece> board;
+	try {
+		shared_ptr<gameBase> ptr(gameBase::getGame(argc, argv));
+		if (ptr == nullptr) {
+			usage(argv[programName]);
+		}
+		return (*ptr).play();
+	}
+	catch(bad_alloc) {
+		return badMem;
+	}
+	catch (int n) {
+		return n;
+	}
 }
 

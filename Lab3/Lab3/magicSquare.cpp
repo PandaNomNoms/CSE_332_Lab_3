@@ -9,32 +9,35 @@
 using namespace std;
 
 void magicSquare::print(){
-	cout<<this;
+	cout << *this;
 }
-magicSquare::magicSquare(std::vector<game_piece> pieces) : gameBase(pieces, 4, 4){
-	
+
+magicSquare::magicSquare(std::vector<game_piece> pieces) : gameBase(pieces, 4, 4) {}
+
+void initialize(std::vector<game_piece>& pieces) {
 	for (int i = 1; i < 10; i++){
-		availablePieces.insert(i);
+		pieces.insert[i];
 	}
 	std::cout << "the game magic square is constructed" << endl;
-};
+}
+
 ostream& operator<<(std::ostream& o, const magicSquare& game){
 	int index;
 	/*Print row*/
-	for (int y = game.getHeight - 1; y >= 0; y--) {
+	for (int y = game.height_h - 1; y >= 0; y--) {
 		/*Print y-axis*/
 		o << y << " ";
 		/*Print column*/
-		for (int x = 0; x <= game.getHeight - 1; x++) {
-			index = game.getWidth * y + x;
-			o << setw(game.getLongest) << game.getBoard[index].display_h << " ";
+		for (int x = 0; x <= game.height_h - 1; x++) {
+			index = game.width_h * y + x;
+			o << setw(game.longest) << game.board_h[index].display_h << " ";
 		}
 		o << endl;
 	}
 	/*Print x-axis*/
 	o << "x ";
-	for (int x = 0; x <= game.getWidth - 1; x++) {
-		o << setw(game.getLongest) << x << " ";
+	for (int x = 0; x <= game.height_h - 1; x++) {
+		o << setw(game.longest) << x << " ";
 	}
 	o << "\n";
 	o << "Available pieces: ";
@@ -47,7 +50,7 @@ ostream& operator<<(std::ostream& o, const magicSquare& game){
 bool magicSquare::done(){
 
 	for (game_piece piece : board_h){
-		if (piece.name_h.length != 1){
+		if (piece.name_h.length() != 1){
 			return false;
 		}
 	}
@@ -72,7 +75,7 @@ bool magicSquare::done(){
 
 bool magicSquare::stalemate(){
 	for (game_piece piece : board_h){
-		if (piece.name_h.length != 1){
+		if (piece.name_h.length() != 1){
 			return false;
 		}
 	}
@@ -82,7 +85,7 @@ bool magicSquare::stalemate(){
 void magicSquare::prompt(unsigned int &num){
 	string input;
 	/*Inital prompt for input*/
-	cout << "Enter a piece or quit game (\"quit\"):" << endl;
+	cout << "Enter coordinates (\"x,y\") or quit game (\"quit\"):" << endl;
 	std::cin >> input;
 	/*Throw up if user has chosen to quit*/
 	if (input == "quit") {
@@ -99,17 +102,29 @@ void magicSquare::prompt(unsigned int &num){
 	}
 }
 
-void magicSquare::turn(){
-	unsigned int piece;
-	magicSquare::prompt(piece);
-	while (availablePieces.find(piece) == availablePieces.end()){
-		cout << "the piece is already used" << endl;
+void magicSquare::turn() {
+	try{
+		unsigned int piece;
 		magicSquare::prompt(piece);
-	}
-	int x, y;
-	gameBase::prompt(x, y);
-	while (x<0 || x>2 || y < 0 || board_h[(y+1)*4+x].name_h.length==1){
-		cout << "The coordinate you put in is not valid" << endl;
+		while (availablePieces.find(piece) == availablePieces.end()){
+			cout << "The piece is used" << endl;
+			magicSquare::prompt(piece);
+		}
+		int x, y;
 		gameBase::prompt(x, y);
+		while (x<0 || x>2 || y<0 || y>2 || board_h[(y + 1) * 4 + x + 1].name_h.length == 1){
+			cout << "Your input is not valid" << endl;
+			gameBase::prompt(x, y);
+		}
+		cout << "you decided to put piece " << piece << " at coordinate " << x << ", " << y << endl;
+		board_h[(y + 1) * 4 + x + 1].display_h = " ";
+		board_h[(y + 1) * 4 + x + 1].name_h = "empty";
+		availablePieces.erase(piece);
+		return;
 	}
+	catch(int){
+		cout << "you decide to quit the game " << endl;
+		return;
+	}
+
 }

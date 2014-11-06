@@ -6,14 +6,15 @@
 
 #ifndef MAGIC_SQUARE_
 #define MAGIC_SQUARE_
+
 class magicSquare : public gameBase{
 private:
 	std::set<unsigned int> availablePieces;
-public:
-	
+public:	
 	friend std::ostream& operator<<(std::ostream&, const magicSquare&);
 	magicSquare(std::vector<game_piece> pieces);
 	void print();
+	virtual void initialize(std::vector<game_piece>&);
 	virtual bool done();
 	virtual bool stalemate();
 	virtual void prompt(unsigned int&);
