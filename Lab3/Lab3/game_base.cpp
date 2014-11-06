@@ -1,3 +1,5 @@
+/*Shared game functions*/
+
 #include "stdafx.h"
 #include <iostream>
 #include <vector>
@@ -9,34 +11,42 @@
 #include "magicSquare.h"
 using namespace std;
 
+/*Determines whether to construct a Nine Almonds Game or Magic Square Game*/
 gameBase * gameBase::getGame(int argc, char* argv[]) {
+	/*Nine Almonds Game Case*/
 	if (lowerCase(argv[gameName]) == "ninealmonds") {
 		vector<game_piece>* vec = new vector<game_piece>;
 		gameBase* game = new NineAlmondsGame(*vec); 
 		return game; 
 	}
+	/*Magic Square Game Case*/
 	else if (lowerCase(argv[gameName]) == "magicsquare") {
 		vector<game_piece>* vec = new vector<game_piece>;
 		gameBase* game = new magicSquare(*vec);
 		return game;
 	}
+	/*Neither Case*/
 	else {
 		return nullptr;
 	}
 }
 
+/*Constructor for gameBase*/
 gameBase::gameBase(vector<game_piece> board, int height, int width)
 	:board_h(board), height_h(height), width_h(width)
 {}
 
+/*Default constructor for gameBase*/
 gameBase::gameBase(){}
 
+/*Give longest an initial value*/
 void gameBase::initiateLongest(vector<game_piece> board, int & longest) {
 	for (game_piece g : board) {
 		checkLongest(g, longest);
 	}
 }
 
+/*Update longest value*/
 void gameBase::checkLongest(game_piece g, int & longest) {
 	if (((int)g.display_h.length()) > longest) {
 		longest = (int) (g.display_h.length());

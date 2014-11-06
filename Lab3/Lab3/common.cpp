@@ -1,3 +1,5 @@
+/*Commonly used functions and values*/
+
 #include "stdafx.h"
 #include <iostream>
 #include <string>

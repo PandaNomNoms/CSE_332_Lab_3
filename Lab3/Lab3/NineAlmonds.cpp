@@ -1,3 +1,5 @@
+/*Functions exclusively for the Nine Almonds Game*/
+
 #include "stdafx.h"
 #include <iostream>
 #include <iomanip>

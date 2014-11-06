@@ -9,11 +9,14 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
+	/*Game board*/
 	vector<game_piece> board;
 	try {
+		/*Get shared pointer*/
 		shared_ptr<gameBase> ptr(gameBase::getGame(argc, argv));
 		if (ptr == nullptr) {
-			usage(argv[programName]);
+			/*Error if input incorrect*/
+			return usage(argv[programName]);
 		}
 		return (*ptr).play();
 	}
