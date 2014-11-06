@@ -26,6 +26,7 @@ void magicSquare::initialize(vector<game_piece>& pieces) {
 
 ostream& operator<<(std::ostream& o, const magicSquare& game){
 	int index;
+	cout << endl;
 	/*Print row*/
 	for (int y = game.height_h - 1; y >= 0; y--) {
 		/*Print y-axis*/
@@ -47,7 +48,7 @@ ostream& operator<<(std::ostream& o, const magicSquare& game){
 	for (int i : game.availablePieces){
 		cout << i << " ";
 	}
-	cout << endl;
+	cout << endl << endl;
 	return o;
 }
 
@@ -116,13 +117,13 @@ void magicSquare::turn() {
 		}
 		int x, y;
 		gameBase::prompt(x, y);
-		while (x < 0 || x > (magicsquare_width-1) || y < 0 || y > (magicsquare_height-1) || board_h[(y + 1) * magicsquare_width + x + 2].name_h.length() == 1){
+		/*while (x < 0 || x > (magicsquare_width-1) || y < 0 || y > (magicsquare_height-1) || board_h[(y + 1) * magicsquare_width + x + 2].name_h.length() == 1){
 			cout << "Invalid coordinate" << endl;
 			gameBase::prompt(x, y);
-		}
+		}*/
 		cout << "You decided to put piece " << piece << " at coordinate " << x << ", " << y << endl;
-		board_h[(y + 1) * magicsquare_width + x + 1].display_h = to_string(piece);
-		board_h[(y + 1) * magicsquare_width + x + 1].name_h = to_string(piece);
+		board_h[y * magicsquare_width + x].display_h = to_string(piece);
+		board_h[y * magicsquare_width + x].name_h = to_string(piece);
 		availablePieces.erase(piece);
 		magicSquare::print();
 		return;
