@@ -117,10 +117,10 @@ void magicSquare::turn() {
 		}
 		int x, y;
 		gameBase::prompt(x, y);
-		/*while (x < 0 || x > (magicsquare_width-1) || y < 0 || y > (magicsquare_height-1) || board_h[(y + 1) * magicsquare_width + x + 2].name_h.length() == 1){
-			cout << "Invalid coordinate" << endl;
+		while (!(board_h[y * magicsquare_width + x].name_h == "empty")) {
+			cout << "The coordinate is not available." << endl;
 			gameBase::prompt(x, y);
-		}*/
+		}
 		cout << "You decided to put piece " << piece << " at coordinate " << x << ", " << y << endl;
 		board_h[y * magicsquare_width + x].display_h = to_string(piece);
 		board_h[y * magicsquare_width + x].name_h = to_string(piece);
@@ -129,6 +129,6 @@ void magicSquare::turn() {
 		return;
 	}
 	catch (char const*) {
-		cout << "While you could take your next turn, you might as well use this one." << endl;
+
 	}
 }
