@@ -21,7 +21,7 @@ magicSquare::magicSquare(std::vector<game_piece> pieces) : gameBase(pieces, magi
 void magicSquare::initialize(vector<game_piece>& pieces) {
 	for (int i = 0; i < (magicsquare_height * magicsquare_width); i++){
 		pieces.push_back(game_piece("empty", " "));
-		availablePieces.insert(i);
+		availablePieces.insert(i+1);
 	}
 	initiateLongest(board_h, longest);
 	cout << "The game magic square is constructed." << endl;
