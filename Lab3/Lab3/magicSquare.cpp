@@ -89,16 +89,18 @@ bool magicSquare::stalemate(){
 void magicSquare::prompt(unsigned int &num){
 	string input;
 	/*Inital prompt for input*/
-	cout << "Enter a piece:" << endl;
+	cout << "Enter a piece(\"n\") or quit(\"quit\"):" << endl;
 	std::cin >> input;
 	/*Throw up if user has chosen to quit*/
 	if (lowerCase(input) == "quit") {
+		cout << "Quitters never win." << endl;
 		throw (int)userExit;
 	}
 	while (!((istringstream)input >> num) || (int)num > (magicsquare_height*magicsquare_width) || (int)num < 0) {
 		cout << "Your input is not valid! Either not a number, not a valid piece, or the piece is not available" << endl;
 		std::cin >> input;
 		if (lowerCase(input) == "quit") {
+			cout << "Quitters never win." << endl;
 			throw (int)userExit;
 		}
 	}
@@ -119,12 +121,13 @@ void magicSquare::turn() {
 			gameBase::prompt(x, y);
 		}
 		cout << "You decided to put piece " << piece << " at coordinate " << x << ", " << y << endl;
-		board_h[(y + 1) * magicsquare_width + x + 1].display_h = " ";
-		board_h[(y + 1) * magicsquare_width + x + 1].name_h = "empty";
+		board_h[(y + 1) * magicsquare_width + x + 1].display_h = to_string(piece);
+		board_h[(y + 1) * magicsquare_width + x + 1].name_h = to_string(piece);
 		availablePieces.erase(piece);
+		magicSquare::print();
 		return;
 	}
 	catch (char const*) {
-		cout << "While you could take your next turn, you might as well use this one.";
+		cout << "While you could take your next turn, you might as well use this one." << endl;
 	}
 }
