@@ -18,6 +18,7 @@ public:
 	void turn();
 	bool valid(int, int, int, int);
 	void print();
+
 };
 
 #endif NINEALMONDS_H

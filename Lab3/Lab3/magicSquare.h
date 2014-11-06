@@ -8,7 +8,7 @@
 #define MAGIC_SQUARE_
 class magicSquare : public gameBase{
 private:
-	std::set<int> availablePieces;
+	std::set<unsigned int> availablePieces;
 public:
 	
 	friend std::ostream& operator<<(std::ostream&, const magicSquare&);
@@ -17,6 +17,7 @@ public:
 	virtual bool done();
 	virtual bool stalemate();
 	virtual void prompt(unsigned int&);
+	virtual void turn();
 };
 
 #endif

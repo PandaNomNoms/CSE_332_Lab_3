@@ -82,7 +82,7 @@ bool magicSquare::stalemate(){
 void magicSquare::prompt(unsigned int &num){
 	string input;
 	/*Inital prompt for input*/
-	cout << "Enter coordinates (\"x,y\") or quit game (\"quit\"):" << endl;
+	cout << "Enter a piece or quit game (\"quit\"):" << endl;
 	std::cin >> input;
 	/*Throw up if user has chosen to quit*/
 	if (input == "quit") {
@@ -96,5 +96,20 @@ void magicSquare::prompt(unsigned int &num){
 			throw (int)userExit;
 			return;
 		}
+	}
+}
+
+void magicSquare::turn(){
+	unsigned int piece;
+	magicSquare::prompt(piece);
+	while (availablePieces.find(piece) == availablePieces.end()){
+		cout << "the piece is already used" << endl;
+		magicSquare::prompt(piece);
+	}
+	int x, y;
+	gameBase::prompt(x, y);
+	while (x<0 || x>2 || y < 0 || board_h[(y+1)*4+x].name_h.length==1){
+		cout << "The coordinate you put in is not valid" << endl;
+		gameBase::prompt(x, y);
 	}
 }
