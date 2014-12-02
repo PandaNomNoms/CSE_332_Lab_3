@@ -21,6 +21,8 @@ int main(int argc, char* argv[])
 			/*Error if input incorrect*/
 			return invalidArg(argv[gameName]);
 		}
+		string saveFileName(argv[gameName]);
+		saveFileName = saveFileName + ".txt";
 		return (*ptr).play();
 	}
 	catch(bad_alloc) {

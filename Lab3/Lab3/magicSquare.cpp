@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <sstream>
 #include <algorithm>
+#include <fstream>
 #include "common.h"
 #include "magicSquare.h"
 using namespace std;
@@ -105,7 +106,7 @@ void magicSquare::prompt(unsigned int &num){
 	std::cin >> input;
 	/*Throw up if user has chosen to quit*/
 	if (lowerCase(input) == "quit") {
-		cout << "Quitters never win." << endl;
+		save();
 		throw (int)userExit;
 	}
 	/*Reprompt if the input is not valid*/
@@ -113,7 +114,7 @@ void magicSquare::prompt(unsigned int &num){
 		cout << "Your input is not valid! Either not a number, not a valid piece, or the piece is not available" << endl;
 		std::cin >> input;
 		if (lowerCase(input) == "quit") {
-			cout << "Quitters never win." << endl;
+			save();
 			throw (int)userExit;
 		}
 	}
@@ -149,4 +150,26 @@ void magicSquare::turn() {
 		return;
 	}
 	catch (char const*) {}
+}
+
+void magicSquare::save() {
+	string input;
+	ofstream saveFile(saveFileName);
+	cout << "Would you like to save the game? (yes/no)" << endl;
+	cin >> input;
+	while (lowerCase(input) != "no" && lowerCase(input) != "yes") {
+		cout << "Not a valid input. Would you like to save the game? (yes/no)" << endl;
+	}
+	if (lowerCase(input) == "no") {
+		saveFile << "ITS LITERALLY NOTHING";
+		cout << "Quitters never win." << endl;
+	}
+	else {
+		saveFile << this;
+		saveFile << counter << endl;
+		for (unsigned int i : availablePieces) {
+			saveFile << i << " ";
+		}
+		saveFile << endl;
+	}
 }

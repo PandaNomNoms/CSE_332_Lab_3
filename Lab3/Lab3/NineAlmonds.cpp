@@ -6,6 +6,7 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
+#include <fstream>
 #include "common.h"
 #include "NineAlmonds.h"
 using namespace std;
@@ -34,7 +35,19 @@ ostream& operator<< (ostream& o, const NineAlmondsGame& game) {
 	return o;
 }
 
-void NineAlmondsGame::initialize(vector<game_piece>& board) {
+void NineAlmondsGame::load(vector<game_piece>& board) {
+	ifstream loadFile("/" + saveFileName);
+	string line;
+	loadFile >> line;
+	if (loadFile.good() && line != "ITS LITERALLY NOTHING") {
+		//Parse
+	}
+	else {
+		initialize(board);
+	}
+}
+
+void NineAlmondsGame::initialize(std::vector<game_piece>& board) {
 	/*Create empty board*/
 	for (int i = 0; i < height_h * width_h; ++i) {
 		board.push_back(game_piece("", " "));
@@ -207,4 +220,22 @@ bool NineAlmondsGame::valid(int x1, int y1, int x2, int y2) {
 
 void NineAlmondsGame::print() {
 	cout << *this;
+}
+
+void gameBase::save() {
+	string input;
+	ofstream saveFile(saveFileName);
+	cout << "Would you like to save the game? (yes/no)" << endl;
+	cin >> input;
+	while (lowerCase(input) != "no" && lowerCase(input) != "yes") {
+		cout << "Not a valid input. Would you like to save the game? (yes/no)" << endl;
+	}
+	if (lowerCase(input) == "no") {
+		saveFile << "ITS LITERALLY NOTHING";
+		cout << "Quitters never win." << endl;
+	}
+	else {
+		saveFile << this;
+		saveFile << counter << endl;
+	}
 }
