@@ -36,16 +36,17 @@ ostream& operator<< (ostream& o, const NineAlmondsGame& game) {
 }
 
 void NineAlmondsGame::load(vector<game_piece>& board) {
-	ifstream loadFile(saveFileName);
+	ifstream loadFile(saveNineAlmonds);
 	string line;
-	loadFile >> line;
+	getline(loadFile, line);
 	if (loadFile.good() && line != "ITS LITERALLY NOTHING" && line == "valid") {
+		cout << "Resuming Nine Almonds" << endl;
 		for (int i = 0; i < height_h*width_h; ++i) {
-			loadFile >> line;
+			getline(loadFile, line);
 			string name = line;
-			loadFile >> line;
+			getline(loadFile, line);
 			string display = line;
-			board[i] = game_piece(name, display);
+			board.push_back(game_piece(name, display));
 		}
 		loadFile >> line;
 		counter = stoi(line);
@@ -81,6 +82,9 @@ bool NineAlmondsGame::done() {
 		}
 		n++;
 	}
+	std::ofstream saveFile;
+	saveFile.open(saveNineAlmonds, std::ofstream::out | std::ofstream::trunc);
+	saveFile << "ITS LITERALLY NOTHING" << endl;
 	return true;
 }
 
@@ -117,7 +121,7 @@ bool NineAlmondsGame::stalemate() {
 	}
 	/*Only reaches here if no pieces have valid jumps*/
 	std::ofstream saveFile;
-	saveFile.open(saveFileName, std::ofstream::out | std::ofstream::trunc);
+	saveFile.open(saveNineAlmonds, std::ofstream::out | std::ofstream::trunc);
 	saveFile << "ITS LITERALLY NOTHING" << endl;
 	return true;
 }
@@ -240,9 +244,10 @@ void NineAlmondsGame::save() {
 	cin >> input;
 	while (lowerCase(input) != "no" && lowerCase(input) != "yes") {
 		cout << "Not a valid input. Would you like to save the game? (yes/no)" << endl;
+		cin >> input;
 	}
 	std::ofstream saveFile;
-	saveFile.open(saveFileName, std::ofstream::out | std::ofstream::trunc);
+	saveFile.open(saveNineAlmonds, std::ofstream::out | std::ofstream::trunc);
 	if (lowerCase(input) == "no") {
 		saveFile << "ITS LITERALLY NOTHING" << endl;
 		cout << "Quitters never win." << endl;
@@ -252,6 +257,7 @@ void NineAlmondsGame::save() {
 		for (game_piece g : board_h) {
 			saveFile << g.name_h << endl << g.display_h << endl;
 		}
+		counter++;
 		saveFile << counter << endl;
 	}
 	saveFile.close();

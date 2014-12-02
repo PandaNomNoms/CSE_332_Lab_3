@@ -9,23 +9,17 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	if (argc > inputNumber) {
+	if (argc != inputNumber) {
 		return usage(argv[programName]);
 	}
+	string saveFileName(argv[gameName]);
 	/*Game board*/
 	vector<game_piece> board;
 	try {
 		/*Get shared pointer*/
 		gameBase::getGame(argc, argv);
 		shared_ptr<gameBase> ptr;
-		try{
-			ptr = gameBase::instance();
-		}
-		catch (int n){
-			return n;
-		}
-		string saveFileName(argv[gameName]);
-		saveFileName = saveFileName + ".txt";
+		ptr = gameBase::instance();
 		return (*ptr).play();
 	}
 	catch(bad_alloc) {

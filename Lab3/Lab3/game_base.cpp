@@ -28,7 +28,7 @@ shared_ptr<gameBase> gameBase::instance(){
 /*Determines whether to construct a Nine Almonds Game or Magic Square Game*/
 void gameBase::getGame(int argc, char* argv[]) {
 	/*Nine Almonds Game Case*/
-	if (lowerCase(argv[gameName]) == "ninealmonds") {
+	if (lowerCase(string(argv[gameName])) == "ninealmonds") {
 		if (gamePtr != nullptr){
 			throw gameAlreadyExist;
 		}
@@ -39,7 +39,7 @@ void gameBase::getGame(int argc, char* argv[]) {
 		
 	}
 	/*Magic Square Game Case*/
-	else if (lowerCase(argv[gameName]) == "magicsquare") {
+	else if (lowerCase(string(argv[gameName])) == "magicsquare") {
 		if (gamePtr != nullptr){
 			throw gameAlreadyExist;
 		}
@@ -49,7 +49,7 @@ void gameBase::getGame(int argc, char* argv[]) {
 		}
 	}
 	/*Neither Case*/
-	else if(lowerCase(argv[reversiGameName]) == "reversi"){
+	else if(lowerCase(string(argv[reversiGameName])) == "reversi"){
 		if (argc != reversiInputNum){
 			usage("Reversi is expecting 3 inputs");
 			throw wrongNumberOfArg;

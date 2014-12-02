@@ -3,6 +3,7 @@
 #include "stdafx.h"
 #include <iostream>
 #include <string>
+#include <algorithm>
 #include "common.h"
 using namespace std;
 
@@ -13,9 +14,11 @@ int almond_width = 5;
 int magicsquare_height = 3;
 int magicsquare_width = 3;
 int magicsum = 15;
-string saveFileName = "default";
 string name = "brown almond";
 string display = "A";
+string saveNineAlmonds = "NineAlmonds.txt";
+string saveMagicSquare = "MagicSquare.txt";
+string saveReversi = "Reversi.txt";
 
 /*Tells user how to properly use the program*/
 int usage(char * c) {
@@ -36,11 +39,7 @@ int invalidFile(char * c) {
 }
 
 /*Change all strings to all lowercase*/
-string lowerCase(string s) {
-	for (char c : s) {
-		if (c <= 'Z' && c >= 'A') {
-			c = c - ('Z' - 'z');
-		}
-	}
+string lowerCase(string& s) {
+	std::transform(s.begin(), s.end(), s.begin(), ::tolower);
 	return s;
 }
