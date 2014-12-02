@@ -21,7 +21,7 @@ shared_ptr<gameBase> gameBase::instance(){
 		return gameBase::gamePtr;
 	}
 	else{
-		throw gamePtrNull;
+		throw (int)gamePtrNull;
 	}
 }
 
@@ -30,7 +30,7 @@ void gameBase::getGame(int argc, char* argv[]) {
 	/*Nine Almonds Game Case*/
 	if (lowerCase(string(argv[gameName])) == "ninealmonds") {
 		if (gamePtr != nullptr){
-			throw gameAlreadyExist;
+			throw (int)gameAlreadyExist;
 		}
 		else{
 		vector<game_piece>* vec = new vector<game_piece>;
@@ -41,7 +41,7 @@ void gameBase::getGame(int argc, char* argv[]) {
 	/*Magic Square Game Case*/
 	else if (lowerCase(string(argv[gameName])) == "magicsquare") {
 		if (gamePtr != nullptr){
-			throw gameAlreadyExist;
+			throw (int)gameAlreadyExist;
 		}
 		else{
 			vector<game_piece>* vec = new vector<game_piece>;
@@ -51,11 +51,10 @@ void gameBase::getGame(int argc, char* argv[]) {
 	/*Neither Case*/
 	else if(lowerCase(string(argv[reversiGameName])) == "reversi"){
 		if (argc != reversiInputNum){
-			usage("Reversi is expecting 3 inputs");
-			throw wrongNumberOfArg;
+			throw (int)wrongNumberOfArg;
 		}
 		if (gamePtr != nullptr){
-			throw gameAlreadyExist;
+			throw (int)gameAlreadyExist;
 		}
 		else{
 			vector<game_piece>* vec = new vector<game_piece>;

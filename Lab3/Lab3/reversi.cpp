@@ -88,6 +88,7 @@ void reversi::initialize(std::vector<game_piece>& board){
 	board.clear();
 	blackTurn = true;
 	for (int i = 0; i < reversi_height*reversi_width; i++){
+
 		if (i == 27 | i == 36){
 			board.push_back(game_piece("black", "X"));
 		}

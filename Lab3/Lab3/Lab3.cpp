@@ -5,6 +5,7 @@
 #include "game_base.h"
 #include "common.h"
 #include <memory>
+#include <iostream>
 using namespace std;
 
 int main(int argc, char* argv[])
@@ -23,11 +24,15 @@ int main(int argc, char* argv[])
 		return (*ptr).play();
 	}
 	catch(bad_alloc) {
+		cout << "Bad allocation" << endl;
 		return badMem;
 	}
 	catch (int n) {
-		if (n == badGameName){
+		if (n == badGameName || n == wrongNumberOfArg){
 			usage(argv[programName]);
+		}
+		else if (n == gameAlreadyExist) {
+			cout << "Another instance of the game is already running" << endl;
 		}
 		return n;
 	}

@@ -23,6 +23,7 @@ string saveReversi = "Reversi.txt";
 /*Tells user how to properly use the program*/
 int usage(char * c) {
 	cout << "Usage: $" << c << " NineAlmonds " << endl << "or" << endl << "$" << c << " MagicSquare" << endl;
+	cout << "or" << endl << "$" << c << " Reversi \"name\" \"name\"" << endl;
 	return wrongNumberOfArg;
 }
 
