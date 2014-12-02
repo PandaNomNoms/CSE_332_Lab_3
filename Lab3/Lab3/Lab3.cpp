@@ -9,9 +9,10 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	if (argc > inputNumber) {
+	if (argc != inputNumber) {
 		return usage(argv[programName]);
 	}
+	string saveFileName(argv[gameName]);
 	/*Game board*/
 	vector<game_piece> board;
 	try {
@@ -24,8 +25,6 @@ int main(int argc, char* argv[])
 		catch (int n){
 			return n;
 		}
-		string saveFileName(argv[gameName]);
-		saveFileName = saveFileName + ".txt";
 		return (*ptr).play();
 	}
 	catch(bad_alloc) {

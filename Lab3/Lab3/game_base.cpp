@@ -27,7 +27,7 @@ shared_ptr<gameBase> gameBase::instance(){
 /*Determines whether to construct a Nine Almonds Game or Magic Square Game*/
 void gameBase::getGame(int argc, char* argv[]) {
 	/*Nine Almonds Game Case*/
-	if (lowerCase(argv[gameName]) == "ninealmonds") {
+	if (lowerCase(string(argv[gameName])) == "ninealmonds") {
 		if (gamePtr != nullptr){
 			throw gameAlreadyExist;
 		}
@@ -38,7 +38,7 @@ void gameBase::getGame(int argc, char* argv[]) {
 		
 	}
 	/*Magic Square Game Case*/
-	else if (lowerCase(argv[gameName]) == "magicsquare") {
+	else if (lowerCase(string(argv[gameName])) == "magicsquare") {
 		vector<game_piece>* vec = new vector<game_piece>;
 		gamePtr = shared_ptr<gameBase>(new magicSquare(*vec));
 	}

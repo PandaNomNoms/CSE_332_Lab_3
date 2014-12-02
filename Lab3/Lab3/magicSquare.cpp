@@ -33,7 +33,7 @@ void magicSquare::initialize(vector<game_piece>& pieces) {
 }
 
 void magicSquare::load(vector<game_piece>& board) {
-	ifstream loadFile(saveFileName);
+	ifstream loadFile(saveMagicSquare);
 	string line;
 	loadFile >> line;
 	if (loadFile.good() && line != "ITS LITERALLY NOTHING" && line == "valid") {
@@ -115,6 +115,9 @@ bool magicSquare::done(){
 	if (stoi(board_h[6].name_h) + stoi(board_h[4].name_h) + stoi(board_h[2].name_h) != magicsum){
 		return false;
 	}
+	std::ofstream saveFile;
+	saveFile.open(saveMagicSquare, std::ofstream::out | std::ofstream::trunc);
+	saveFile << "ITS LITERALLY NOTHING" << endl;
 	return true;
 }
 
@@ -124,6 +127,9 @@ bool magicSquare::stalemate(){
 		return false;
 	}
 	cout << "All pieces used" << endl;
+	std::ofstream saveFile;
+	saveFile.open(saveMagicSquare, std::ofstream::out | std::ofstream::trunc);
+	saveFile << "ITS LITERALLY NOTHING" << endl;
 	return !done();
 }
 
@@ -187,9 +193,10 @@ void magicSquare::save() {
 	cin >> input;
 	while (lowerCase(input) != "no" && lowerCase(input) != "yes") {
 		cout << "Not a valid input. Would you like to save the game? (yes/no)" << endl;
+		cin >> input;
 	}
 	std::ofstream saveFile;
-	saveFile.open(saveFileName, std::ofstream::out | std::ofstream::trunc);
+	saveFile.open(saveMagicSquare, std::ofstream::out | std::ofstream::trunc);
 	if (lowerCase(input) == "no") {
 		saveFile << "ITS LITERALLY NOTHING" << endl;
 		cout << "Quitters never win." << endl;

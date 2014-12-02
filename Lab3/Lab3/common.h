@@ -12,7 +12,9 @@ extern int magicsquare_width;
 extern int magicsum;
 extern std::string name;
 extern std::string display;
-extern std::string saveFileName;
+extern std::string saveNineAlmonds;
+extern std::string saveMagicSquare;
+extern std::string saveReversi;
 
 enum indices { programName, gameName, inputNumber };
 enum result { success, wrongNumberOfArg, invalidFileName, invalidArgument, couldNotRead, couldNotExtract, noWellFormedDefinitions, dimensionsMismatch, userExit, staleMate, programLogicError, badMem, gamePtrNull, gameAlreadyExist, badGameName };
@@ -20,5 +22,5 @@ int usage(char *);
 int invalidFile(char *);
 int invalidArg(char *);
 
-std::string lowerCase(std::string);
+std::string lowerCase(std::string&);
 #endif
