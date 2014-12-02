@@ -36,11 +36,20 @@ ostream& operator<< (ostream& o, const NineAlmondsGame& game) {
 }
 
 void NineAlmondsGame::load(vector<game_piece>& board) {
-	ifstream loadFile("/" + saveFileName);
+	ifstream loadFile(saveFileName);
 	string line;
 	loadFile >> line;
-	if (loadFile.good() && line != "ITS LITERALLY NOTHING") {
-		//Parse
+	if (loadFile.good() && line != "ITS LITERALLY NOTHING" && line == "valid") {
+		for (int i = 0; i < height_h*width_h; ++i) {
+			loadFile >> line;
+			string name = line;
+			loadFile >> line;
+			string display = line;
+			board[i] = game_piece(name, display);
+		}
+		loadFile >> line;
+		counter = stoi(line);
+		initiateLongest(board, longest);
 	}
 	else {
 		initialize(board);
@@ -107,6 +116,9 @@ bool NineAlmondsGame::stalemate() {
 		}
 	}
 	/*Only reaches here if no pieces have valid jumps*/
+	std::ofstream saveFile;
+	saveFile.open(saveFileName, std::ofstream::out | std::ofstream::trunc);
+	saveFile << "ITS LITERALLY NOTHING" << endl;
 	return true;
 }
 
@@ -224,18 +236,23 @@ void NineAlmondsGame::print() {
 
 void gameBase::save() {
 	string input;
-	ofstream saveFile(saveFileName);
 	cout << "Would you like to save the game? (yes/no)" << endl;
 	cin >> input;
 	while (lowerCase(input) != "no" && lowerCase(input) != "yes") {
 		cout << "Not a valid input. Would you like to save the game? (yes/no)" << endl;
 	}
+	std::ofstream saveFile;
+	saveFile.open(saveFileName, std::ofstream::out | std::ofstream::trunc);
 	if (lowerCase(input) == "no") {
-		saveFile << "ITS LITERALLY NOTHING";
+		saveFile << "ITS LITERALLY NOTHING" << endl;
 		cout << "Quitters never win." << endl;
 	}
 	else {
-		saveFile << this;
+		saveFile << "valid" << endl;
+		for (game_piece g : board_h) {
+			saveFile << g.name_h << endl << g.display_h << endl;
+		}
 		saveFile << counter << endl;
 	}
+	saveFile.close();
 }

@@ -18,6 +18,10 @@ void magicSquare::print(){
 
 magicSquare::magicSquare(std::vector<game_piece> pieces) : gameBase(pieces, magicsquare_height, magicsquare_width) {}
 
+void load(std::vector<game_piece>& pieces) {
+
+}
+
 /*Initialize the magic square board*/
 void magicSquare::initialize(vector<game_piece>& pieces) {
 	for (int i = 0; i < (magicsquare_height * magicsquare_width); i++){
@@ -26,6 +30,31 @@ void magicSquare::initialize(vector<game_piece>& pieces) {
 	}
 	initiateLongest(board_h, longest);
 	cout << "The game magic square is constructed." << endl;
+}
+
+void magicSquare::load(vector<game_piece>& board) {
+	ifstream loadFile(saveFileName);
+	string line;
+	loadFile >> line;
+	if (loadFile.good() && line != "ITS LITERALLY NOTHING" && line == "valid") {
+		for (int i = 0; i < height_h*width_h; ++i) {
+			loadFile >> line;
+			string name = line;
+			loadFile >> line;
+			string display = line;
+			board[i] = game_piece(name, display);
+		}
+		loadFile >> line;
+		counter = stoi(line);
+		while (!loadFile.eof()) {
+			loadFile >> line;
+			availablePieces.insert(stoi(line));
+		}
+		initiateLongest(board, longest);
+	}
+	else {
+		initialize(board);
+	}
 }
 
 /*Put magic square into ostream*/
@@ -160,16 +189,21 @@ void magicSquare::save() {
 	while (lowerCase(input) != "no" && lowerCase(input) != "yes") {
 		cout << "Not a valid input. Would you like to save the game? (yes/no)" << endl;
 	}
+	std::ofstream saveFile;
+	saveFile.open(saveFileName, std::ofstream::out | std::ofstream::trunc);
 	if (lowerCase(input) == "no") {
-		saveFile << "ITS LITERALLY NOTHING";
+		saveFile << "ITS LITERALLY NOTHING" << endl;
 		cout << "Quitters never win." << endl;
 	}
 	else {
-		saveFile << this;
-		saveFile << counter << endl;
-		for (unsigned int i : availablePieces) {
-			saveFile << i << " ";
+		saveFile << "valid" << endl;
+		for (game_piece g : board_h) {
+			saveFile << g.name_h << endl << g.display_h << endl;
 		}
-		saveFile << endl;
+		saveFile << counter << endl;
+		for (int i : availablePieces) {
+			saveFile << i << endl;
+		}
 	}
+	saveFile.close();
 }
