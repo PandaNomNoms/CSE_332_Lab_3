@@ -20,6 +20,7 @@ magicSquare::magicSquare(std::vector<game_piece> board) : gameBase(board, magics
 
 /*Initialize the magic square board*/
 void magicSquare::initialize(vector<game_piece>& board) {
+	board.clear();
 	for (int i = 0; i < (magicsquare_height * magicsquare_width); i++){
 		board.push_back(game_piece("empty", " "));
 		availablePieces.insert(i+1);
@@ -46,6 +47,7 @@ void magicSquare::load(vector<game_piece>& board) {
 		while (getline(loadFile, line)) {
 			availablePieces.insert(stoi(line));
 		}
+		loadFile.close();
 		initiateLongest(board, longest);
 	}
 	else {

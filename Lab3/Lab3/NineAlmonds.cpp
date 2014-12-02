@@ -48,8 +48,9 @@ void NineAlmondsGame::load(vector<game_piece>& board) {
 			string display = line;
 			board.push_back(game_piece(name, display));
 		}
-		loadFile >> line;
+		getline(loadFile, line);
 		counter = stoi(line);
+		loadFile.close();
 		initiateLongest(board, longest);
 	}
 	else {
@@ -58,6 +59,7 @@ void NineAlmondsGame::load(vector<game_piece>& board) {
 }
 
 void NineAlmondsGame::initialize(std::vector<game_piece>& board) {
+	board.clear();
 	/*Create empty board*/
 	for (int i = 0; i < height_h * width_h; ++i) {
 		board.push_back(game_piece("", " "));

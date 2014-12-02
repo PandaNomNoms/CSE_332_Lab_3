@@ -46,7 +46,46 @@ void reversi::print(){
 	cout << *this;
 }
 
+void reversi::load(vector<game_piece>& board) {
+	ifstream loadFile(saveReversi);
+	string line;
+	getline(loadFile, line);
+	if (loadFile.good() && line != "ITS LITERALLY NOTHING" && line == "valid") {
+		cout << "Resuming Reversi" << endl;
+		for (int i = 0; i < height_h*width_h; ++i) {
+			getline(loadFile, line);
+			string name = line;
+			getline(loadFile, line);
+			string display = line;
+			board.push_back(game_piece(name, display));
+		}
+		getline(loadFile, line);
+		counter = stoi(line);
+		getline(loadFile, line);
+		blackName = stoi(line);
+		getline(loadFile, line);
+		whiteName = stoi(line);
+		getline(loadFile, line);
+		if (line == "black") {
+			blackTurn = true;
+		}
+		else if (line == "white") {
+			blackTurn = false;
+		}
+		else {
+			initialize(board);
+			return;
+		}
+		loadFile.close();
+		initiateLongest(board, longest);
+	}
+	else {
+		initialize(board);
+	}
+}
+
 void reversi::initialize(std::vector<game_piece>& board){
+	board.clear();
 	blackTurn = true;
 	for (int i = 0; i < reversi_height*reversi_width; i++){
 		if (i == 27 | i == 36){
@@ -189,4 +228,37 @@ void reversi::turn(){
 		cout << "black piece type in your coordinates" << endl;
 	}
 	
+}
+
+void reversi::save() {
+	string input;
+	cout << "Would you like to save the game? (yes/no)" << endl;
+	cin >> input;
+	while (lowerCase(input) != "no" && lowerCase(input) != "yes") {
+		cout << "Not a valid input. Would you like to save the game? (yes/no)" << endl;
+		cin >> input;
+	}
+	std::ofstream saveFile;
+	saveFile.open(saveReversi, std::ofstream::out | std::ofstream::trunc);
+	if (lowerCase(input) == "no") {
+		saveFile << "ITS LITERALLY NOTHING" << endl;
+		cout << "Quitters never win." << endl;
+	}
+	else {
+		saveFile << "valid" << endl;
+		for (game_piece g : board_h) {
+			saveFile << g.name_h << endl << g.display_h << endl;
+		}
+		counter++;
+		saveFile << counter << endl;
+		saveFile << blackName << endl;
+		saveFile << whiteName << endl;
+		if (blackTurn) {
+			saveFile << "black" << endl;
+		}
+		else {
+			saveFile << "white" << endl;
+		}
+	}
+	saveFile.close();
 }
