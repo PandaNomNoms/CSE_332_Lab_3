@@ -82,6 +82,7 @@
     <ClInclude Include="common.h" />
     <ClInclude Include="game_base.h" />
     <ClInclude Include="game_piece.h" />
+    <ClInclude Include="reversi.h" />
     <ClInclude Include="magicSquare.h" />
     <ClInclude Include="NineAlmonds.h" />
     <ClInclude Include="stdafx.h" />
