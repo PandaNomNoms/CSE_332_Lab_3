@@ -17,11 +17,12 @@ public:
 	reversi(std::vector<game_piece> pieces, std::string blackName, std::string whiteName);
 	bool whiteValidMove();
 	bool blackValidMove();
+	bool checkBlackValid(int&, int&);
+	bool checkWhiteValid(int&, int&);
 	void print();
 	virtual void initialize(std::vector<game_piece>&);
 	virtual bool done();
 	virtual bool stalemate();
-	virtual void prompt(unsigned int&);
 	virtual void turn();
 	virtual void save();
 	virtual void load(std::vector<game_piece>&);
