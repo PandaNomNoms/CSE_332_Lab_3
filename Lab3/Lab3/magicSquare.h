@@ -19,8 +19,8 @@ public:
 	virtual bool stalemate();
 	virtual void prompt(unsigned int&);
 	virtual void turn();
-	void save();
-	void load(std::vector<game_piece>&);
+	virtual void save();
+	virtual void load(std::vector<game_piece>&);
 };
 
 #endif

@@ -183,7 +183,6 @@ void magicSquare::turn() {
 
 void magicSquare::save() {
 	string input;
-	ofstream saveFile(saveFileName);
 	cout << "Would you like to save the game? (yes/no)" << endl;
 	cin >> input;
 	while (lowerCase(input) != "no" && lowerCase(input) != "yes") {

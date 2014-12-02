@@ -234,7 +234,7 @@ void NineAlmondsGame::print() {
 	cout << *this;
 }
 
-void gameBase::save() {
+void NineAlmondsGame::save() {
 	string input;
 	cout << "Would you like to save the game? (yes/no)" << endl;
 	cin >> input;
