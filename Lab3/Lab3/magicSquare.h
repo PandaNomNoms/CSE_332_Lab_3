@@ -19,7 +19,7 @@ public:
 	virtual bool stalemate();
 	virtual void prompt(unsigned int&);
 	virtual void turn();
-	
+	void save();
 };
 
 #endif

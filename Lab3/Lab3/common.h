@@ -10,6 +10,7 @@ extern int magicsquare_width;
 extern int magicsum;
 extern std::string name;
 extern std::string display;
+extern std::string saveFileName;
 
 enum indices { programName, gameName, inputNumber };
 enum result { success, wrongNumberOfArg, invalidFileName, invalidArgument, couldNotRead, couldNotExtract, noWellFormedDefinitions, dimensionsMismatch, userExit, staleMate, programLogicError, badMem, gamePtrNull, gameAlreadyExist, badGameName };
