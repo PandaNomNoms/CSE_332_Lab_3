@@ -19,12 +19,7 @@ int main(int argc, char* argv[])
 		/*Get shared pointer*/
 		gameBase::getGame(argc, argv);
 		shared_ptr<gameBase> ptr;
-		try{
-			ptr = gameBase::instance();
-		}
-		catch (int n){
-			return n;
-		}
+		ptr = gameBase::instance();
 		return (*ptr).play();
 	}
 	catch(bad_alloc) {

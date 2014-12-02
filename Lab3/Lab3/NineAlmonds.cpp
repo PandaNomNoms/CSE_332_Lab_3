@@ -40,6 +40,7 @@ void NineAlmondsGame::load(vector<game_piece>& board) {
 	string line;
 	getline(loadFile, line);
 	if (loadFile.good() && line != "ITS LITERALLY NOTHING" && line == "valid") {
+		cout << "Resuming Nine Almonds" << endl;
 		for (int i = 0; i < height_h*width_h; ++i) {
 			getline(loadFile, line);
 			string name = line;
@@ -256,6 +257,7 @@ void NineAlmondsGame::save() {
 		for (game_piece g : board_h) {
 			saveFile << g.name_h << endl << g.display_h << endl;
 		}
+		counter++;
 		saveFile << counter << endl;
 	}
 	saveFile.close();

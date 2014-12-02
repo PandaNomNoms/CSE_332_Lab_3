@@ -16,16 +16,12 @@ void magicSquare::print(){
 	cout << *this;
 }
 
-magicSquare::magicSquare(std::vector<game_piece> pieces) : gameBase(pieces, magicsquare_height, magicsquare_width) {}
-
-void load(std::vector<game_piece>& pieces) {
-
-}
+magicSquare::magicSquare(std::vector<game_piece> board) : gameBase(board, magicsquare_height, magicsquare_width) {}
 
 /*Initialize the magic square board*/
-void magicSquare::initialize(vector<game_piece>& pieces) {
+void magicSquare::initialize(vector<game_piece>& board) {
 	for (int i = 0; i < (magicsquare_height * magicsquare_width); i++){
-		pieces.push_back(game_piece("empty", " "));
+		board.push_back(game_piece("empty", " "));
 		availablePieces.insert(i+1);
 	}
 	initiateLongest(board_h, longest);
@@ -35,19 +31,19 @@ void magicSquare::initialize(vector<game_piece>& pieces) {
 void magicSquare::load(vector<game_piece>& board) {
 	ifstream loadFile(saveMagicSquare);
 	string line;
-	loadFile >> line;
+	getline(loadFile, line);
 	if (loadFile.good() && line != "ITS LITERALLY NOTHING" && line == "valid") {
+		cout << "Resuming Magic Square" << endl;
 		for (int i = 0; i < height_h*width_h; ++i) {
-			loadFile >> line;
+			getline(loadFile, line);
 			string name = line;
-			loadFile >> line;
+			getline(loadFile, line);
 			string display = line;
-			board[i] = game_piece(name, display);
+			board.push_back(game_piece(name, display));
 		}
-		loadFile >> line;
+		getline(loadFile, line);
 		counter = stoi(line);
-		while (!loadFile.eof()) {
-			loadFile >> line;
+		while (getline(loadFile, line)) {
 			availablePieces.insert(stoi(line));
 		}
 		initiateLongest(board, longest);
@@ -206,6 +202,7 @@ void magicSquare::save() {
 		for (game_piece g : board_h) {
 			saveFile << g.name_h << endl << g.display_h << endl;
 		}
+		counter++;
 		saveFile << counter << endl;
 		for (int i : availablePieces) {
 			saveFile << i << endl;

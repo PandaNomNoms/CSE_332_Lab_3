@@ -44,7 +44,7 @@ void gameBase::getGame(int argc, char* argv[]) {
 	}
 	/*Neither Case*/
 	else {
-		throw badGameName;
+		throw (int)badGameName;
 	}
 }
 
