@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <sstream>
 #include <algorithm>
+#include <fstream>
 #include "common.h"
 #include "magicSquare.h"
 using namespace std;
@@ -17,6 +18,10 @@ void magicSquare::print(){
 
 magicSquare::magicSquare(std::vector<game_piece> pieces) : gameBase(pieces, magicsquare_height, magicsquare_width) {}
 
+void load(std::vector<game_piece>& pieces) {
+
+}
+
 /*Initialize the magic square board*/
 void magicSquare::initialize(vector<game_piece>& pieces) {
 	for (int i = 0; i < (magicsquare_height * magicsquare_width); i++){
@@ -25,6 +30,31 @@ void magicSquare::initialize(vector<game_piece>& pieces) {
 	}
 	initiateLongest(board_h, longest);
 	cout << "The game magic square is constructed." << endl;
+}
+
+void magicSquare::load(vector<game_piece>& board) {
+	ifstream loadFile(saveFileName);
+	string line;
+	loadFile >> line;
+	if (loadFile.good() && line != "ITS LITERALLY NOTHING" && line == "valid") {
+		for (int i = 0; i < height_h*width_h; ++i) {
+			loadFile >> line;
+			string name = line;
+			loadFile >> line;
+			string display = line;
+			board[i] = game_piece(name, display);
+		}
+		loadFile >> line;
+		counter = stoi(line);
+		while (!loadFile.eof()) {
+			loadFile >> line;
+			availablePieces.insert(stoi(line));
+		}
+		initiateLongest(board, longest);
+	}
+	else {
+		initialize(board);
+	}
 }
 
 /*Put magic square into ostream*/
@@ -105,7 +135,7 @@ void magicSquare::prompt(unsigned int &num){
 	std::cin >> input;
 	/*Throw up if user has chosen to quit*/
 	if (lowerCase(input) == "quit") {
-		cout << "Quitters never win." << endl;
+		save();
 		throw (int)userExit;
 	}
 	/*Reprompt if the input is not valid*/
@@ -113,7 +143,7 @@ void magicSquare::prompt(unsigned int &num){
 		cout << "Your input is not valid! Either not a number, not a valid piece, or the piece is not available" << endl;
 		std::cin >> input;
 		if (lowerCase(input) == "quit") {
-			cout << "Quitters never win." << endl;
+			save();
 			throw (int)userExit;
 		}
 	}
@@ -149,4 +179,30 @@ void magicSquare::turn() {
 		return;
 	}
 	catch (char const*) {}
+}
+
+void magicSquare::save() {
+	string input;
+	cout << "Would you like to save the game? (yes/no)" << endl;
+	cin >> input;
+	while (lowerCase(input) != "no" && lowerCase(input) != "yes") {
+		cout << "Not a valid input. Would you like to save the game? (yes/no)" << endl;
+	}
+	std::ofstream saveFile;
+	saveFile.open(saveFileName, std::ofstream::out | std::ofstream::trunc);
+	if (lowerCase(input) == "no") {
+		saveFile << "ITS LITERALLY NOTHING" << endl;
+		cout << "Quitters never win." << endl;
+	}
+	else {
+		saveFile << "valid" << endl;
+		for (game_piece g : board_h) {
+			saveFile << g.name_h << endl << g.display_h << endl;
+		}
+		saveFile << counter << endl;
+		for (int i : availablePieces) {
+			saveFile << i << endl;
+		}
+	}
+	saveFile.close();
 }

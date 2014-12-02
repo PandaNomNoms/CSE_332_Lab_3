@@ -6,6 +6,7 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
+#include <fstream>
 #include "common.h"
 #include "NineAlmonds.h"
 using namespace std;
@@ -34,7 +35,28 @@ ostream& operator<< (ostream& o, const NineAlmondsGame& game) {
 	return o;
 }
 
-void NineAlmondsGame::initialize(vector<game_piece>& board) {
+void NineAlmondsGame::load(vector<game_piece>& board) {
+	ifstream loadFile(saveFileName);
+	string line;
+	loadFile >> line;
+	if (loadFile.good() && line != "ITS LITERALLY NOTHING" && line == "valid") {
+		for (int i = 0; i < height_h*width_h; ++i) {
+			loadFile >> line;
+			string name = line;
+			loadFile >> line;
+			string display = line;
+			board[i] = game_piece(name, display);
+		}
+		loadFile >> line;
+		counter = stoi(line);
+		initiateLongest(board, longest);
+	}
+	else {
+		initialize(board);
+	}
+}
+
+void NineAlmondsGame::initialize(std::vector<game_piece>& board) {
 	/*Create empty board*/
 	for (int i = 0; i < height_h * width_h; ++i) {
 		board.push_back(game_piece("", " "));
@@ -94,6 +116,9 @@ bool NineAlmondsGame::stalemate() {
 		}
 	}
 	/*Only reaches here if no pieces have valid jumps*/
+	std::ofstream saveFile;
+	saveFile.open(saveFileName, std::ofstream::out | std::ofstream::trunc);
+	saveFile << "ITS LITERALLY NOTHING" << endl;
 	return true;
 }
 
@@ -207,4 +232,27 @@ bool NineAlmondsGame::valid(int x1, int y1, int x2, int y2) {
 
 void NineAlmondsGame::print() {
 	cout << *this;
+}
+
+void NineAlmondsGame::save() {
+	string input;
+	cout << "Would you like to save the game? (yes/no)" << endl;
+	cin >> input;
+	while (lowerCase(input) != "no" && lowerCase(input) != "yes") {
+		cout << "Not a valid input. Would you like to save the game? (yes/no)" << endl;
+	}
+	std::ofstream saveFile;
+	saveFile.open(saveFileName, std::ofstream::out | std::ofstream::trunc);
+	if (lowerCase(input) == "no") {
+		saveFile << "ITS LITERALLY NOTHING" << endl;
+		cout << "Quitters never win." << endl;
+	}
+	else {
+		saveFile << "valid" << endl;
+		for (game_piece g : board_h) {
+			saveFile << g.name_h << endl << g.display_h << endl;
+		}
+		saveFile << counter << endl;
+	}
+	saveFile.close();
 }

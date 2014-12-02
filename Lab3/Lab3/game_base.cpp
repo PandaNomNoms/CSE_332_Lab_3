@@ -5,29 +5,46 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
+#include <memory>
 #include "common.h"
 #include "game_base.h"
 #include "NineAlmonds.h"
 #include "magicSquare.h"
 using namespace std;
 
+	
+shared_ptr<gameBase> gameBase::gamePtr = nullptr;
+
+shared_ptr<gameBase> gameBase::instance(){
+	if (gameBase::gamePtr != nullptr){
+		return gameBase::gamePtr;
+	}
+	else{
+		throw gamePtrNull;
+	}
+}
+
 /*Determines whether to construct a Nine Almonds Game or Magic Square Game*/
-gameBase * gameBase::getGame(int argc, char* argv[]) {
+void gameBase::getGame(int argc, char* argv[]) {
 	/*Nine Almonds Game Case*/
 	if (lowerCase(argv[gameName]) == "ninealmonds") {
+		if (gamePtr != nullptr){
+			throw gameAlreadyExist;
+		}
+		else{
 		vector<game_piece>* vec = new vector<game_piece>;
-		gameBase* game = new NineAlmondsGame(*vec); 
-		return game; 
+			gamePtr = shared_ptr<gameBase>(new NineAlmondsGame(*vec));
+		}
+		
 	}
 	/*Magic Square Game Case*/
 	else if (lowerCase(argv[gameName]) == "magicsquare") {
 		vector<game_piece>* vec = new vector<game_piece>;
-		gameBase* game = new magicSquare(*vec);
-		return game;
+		gamePtr = shared_ptr<gameBase>(new magicSquare(*vec));
 	}
 	/*Neither Case*/
 	else {
-		return nullptr;
+		throw badGameName;
 	}
 }
 
@@ -55,7 +72,7 @@ void gameBase::checkLongest(game_piece g, int & longest) {
 
 /*Begin the game*/
 int gameBase::play() {
-	initialize(board_h);
+	load(board_h);
 	print();
 	int counter = 0;
 	bool s;
@@ -88,7 +105,7 @@ void gameBase::prompt(int& a, int& b) {
 	cin >> input;
 	/*Throw up if user has chosen to quit*/
 	if (lowerCase(input) == "quit") {
-		cout << "Quitters never win." << endl;
+		save();
 		throw (int)userExit;
 	}
 	/*Throw up if user has chosen to end turn*/
@@ -102,8 +119,8 @@ void gameBase::prompt(int& a, int& b) {
 	while (!((istringstream)input >> a >> b)) {
 		cout << "Not a valid input, Enter coordinates (\"x,y\"), end turn (\"end\"), or quit game (\"quit\"):" << endl;
 		cin >> input;
-		if (input == "quit") {
-			cout << "Quitters never win." << endl;
+		if (lowerCase(input) == "quit") {
+			save();
 			throw (int)userExit;
 		}
 		else if (lowerCase(input) == "end") {
