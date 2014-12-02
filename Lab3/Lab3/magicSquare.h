@@ -20,6 +20,7 @@ public:
 	virtual void prompt(unsigned int&);
 	virtual void turn();
 	void save();
+	void load(std::vector<game_piece>&);
 };
 
 #endif
