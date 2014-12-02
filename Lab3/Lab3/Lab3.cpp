@@ -10,9 +10,7 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	if (argc != inputNumber) {
-		return usage(argv[programName]);
-	}
+	
 	string saveFileName(argv[gameName]);
 	/*Game board*/
 	vector<game_piece> board;

@@ -50,10 +50,13 @@ void gameBase::getGame(int argc, char* argv[]) {
 	}
 	/*Neither Case*/
 	else if(lowerCase(string(argv[reversiGameName])) == "reversi"){
+	
 		if (argc != reversiInputNum){
+			
 			throw (int)wrongNumberOfArg;
 		}
 		if (gamePtr != nullptr){
+			
 			throw (int)gameAlreadyExist;
 		}
 		else{
@@ -91,10 +94,16 @@ int gameBase::play() {
 	load(board_h);
 	print();
 	int counter = 0;
-	bool s;
-	bool d;
+	bool s = stalemate();
+	bool d = done();
+	cout << "now d is " << d << endl;
+	cout << "now s is " << s << endl;
 	/*Check if the game is done or if there are any valid moves*/
-	while (!((s = stalemate()) || (d = done()))) {
+	while (!s && !d) {
+		s = stalemate();
+		d = done();
+		cout << "now d is " << d << endl;
+		cout << "now s is " << s << endl;
 		turn();
 		counter++;
 	}
