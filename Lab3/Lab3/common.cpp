@@ -6,6 +6,8 @@
 #include "common.h"
 using namespace std;
 
+int reversi_height = 8;
+int reversi_width = 8;
 int almond_height = 5;
 int almond_width = 5;
 int magicsquare_height = 3;

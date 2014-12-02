@@ -3,6 +3,8 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+extern int reversi_height;
+extern int reversi_width;
 extern int almond_height;
 extern int almond_width;
 extern int magicsquare_height;
