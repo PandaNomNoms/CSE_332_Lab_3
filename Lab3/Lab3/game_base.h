@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include <vector>
+#include <memory>
 #include "game_piece.h"
 
 #ifndef GAMEBASE_H
@@ -7,6 +8,7 @@
 
 class gameBase {
 protected:
+	static std::shared_ptr<gameBase> gamePtr;
 	int width_h;
 	int height_h;
 	int longest;
@@ -14,7 +16,8 @@ protected:
 	void initiateLongest(std::vector<game_piece>, int &);
 	void checkLongest(game_piece g, int &);
 public:
-	static gameBase * getGame(int, char**);
+	static std::shared_ptr<gameBase> instance();
+	static void getGame(int, char**);
 	int play();
 	virtual void initialize(std::vector<game_piece>&) = 0;
 	virtual void print() = 0;

@@ -16,10 +16,13 @@ int main(int argc, char* argv[])
 	vector<game_piece> board;
 	try {
 		/*Get shared pointer*/
-		shared_ptr<gameBase> ptr(gameBase::getGame(argc, argv));
-		if (ptr == nullptr) {
-			/*Error if input incorrect*/
-			return invalidArg(argv[gameName]);
+		gameBase::getGame(argc, argv);
+		shared_ptr<gameBase> ptr;
+		try{
+			ptr = gameBase::instance();
+		}
+		catch (int n){
+			return n;
 		}
 		return (*ptr).play();
 	}
@@ -27,6 +30,9 @@ int main(int argc, char* argv[])
 		return badMem;
 	}
 	catch (int n) {
+		if (n == badGameName){
+			usage(argv[programName]);
+		}
 		return n;
 	}
 }
