@@ -10,6 +10,7 @@
 #include "game_base.h"
 #include "NineAlmonds.h"
 #include "magicSquare.h"
+#include "reversi.h"
 using namespace std;
 
 	
@@ -39,12 +40,28 @@ void gameBase::getGame(int argc, char* argv[]) {
 	}
 	/*Magic Square Game Case*/
 	else if (lowerCase(argv[gameName]) == "magicsquare") {
-		vector<game_piece>* vec = new vector<game_piece>;
-		gamePtr = shared_ptr<gameBase>(new magicSquare(*vec));
+		if (gamePtr != nullptr){
+			throw gameAlreadyExist;
+		}
+		else{
+			vector<game_piece>* vec = new vector<game_piece>;
+			gamePtr = shared_ptr<gameBase>(new magicSquare(*vec));
+		}
 	}
 	/*Neither Case*/
-	else {
-		throw badGameName;
+	else if(lowerCase(argv[reversiGameName]) == "reversi"){
+		if (argc != reversiInputNum){
+			usage("Reversi is expecting 3 inputs");
+			throw wrongNumberOfArg;
+		}
+		if (gamePtr != nullptr){
+			throw gameAlreadyExist;
+		}
+		else{
+			vector<game_piece>* vec = new vector<game_piece>;
+			gamePtr = shared_ptr<gameBase>(new reversi(*vec, argv[blackPieceName], argv[whitePieceName]));
+			
+		}
 	}
 }
 
@@ -97,7 +114,7 @@ int gameBase::play() {
 	return programLogicError;
 }
 
-/*Prompt for NineAlmonds*/
+/*Prompt*/
 void gameBase::prompt(int& a, int& b) {
 	string input;
 	/*Inital prompt for input*/

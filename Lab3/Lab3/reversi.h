@@ -9,17 +9,22 @@
 
 class reversi : public gameBase{
 private:
-	std::set<unsigned int> availablePieces;
+	std::string blackName;
+	std::string whiteName;
+	bool blackTurn;
 public:
 	friend std::ostream& operator<<(std::ostream&, const reversi&);
-	reversi(std::vector<game_piece> pieces);
+	reversi(std::vector<game_piece> pieces, std::string blackName, std::string whiteName);
+	bool whiteValidMove();
+	bool blackValidMove();
 	void print();
 	virtual void initialize(std::vector<game_piece>&);
 	virtual bool done();
 	virtual bool stalemate();
 	virtual void prompt(unsigned int&);
 	virtual void turn();
-	void save();
+	virtual void save();
+	virtual void load(std::vector<game_piece>&);
 };
 
 #endif
