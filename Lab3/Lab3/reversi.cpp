@@ -144,6 +144,7 @@ bool reversi::stalemate(){
 		}
 	}
 	if ((!whiteValidMove()) && (!blackValidMove())){
+		
 		if (blackCount == whiteCount){
 			return true;
 		}
@@ -162,17 +163,20 @@ bool reversi :: whiteValidMove(){
 			srcIdx = width + reversi_width * height;
 			pieceColor = board_h[srcIdx].name_h;
 			if (pieceColor == "white"){
+				
 				for (int neighborHeight = height - 1; neighborHeight <= height + 1; neighborHeight++){
 					for (int neighborWidth = width - 1; neighborWidth <= width + 1; neighborWidth++){
 						checkIdx = neighborWidth + reversi_width * neighborHeight;
 						if (checkIdx >= 0 && checkIdx < reversi_height * reversi_width){
 							oppoColor = board_h[checkIdx].name_h;
-							if (pieceColor != ""&&oppoColor != ""&&pieceColor != oppoColor){
-								idxDiff = srcIdx - checkIdx;
+							if (oppoColor == "black"){
+								
+								idxDiff = checkIdx - srcIdx;
 								while (checkIdx >= 0 && checkIdx < reversi_height * reversi_width && board_h[checkIdx].name_h == oppoColor){
 									checkIdx += idxDiff;
 								}
 								if (checkIdx >= 0 && checkIdx < reversi_height * reversi_width && board_h[checkIdx].name_h == ""){
+								
 									return true;
 								}
 							}
@@ -196,17 +200,22 @@ bool reversi::blackValidMove(){
 			srcIdx = width + reversi_width * height;
 			pieceColor = board_h[srcIdx].name_h;
 			if (pieceColor == "black"){
+				
 				for (int neighborHeight = height - 1; neighborHeight <= height + 1; neighborHeight++){
 					for (int neighborWidth = width - 1; neighborWidth <= width + 1; neighborWidth++){
 						checkIdx = neighborWidth + reversi_width * neighborHeight;
 						if (checkIdx >= 0 && checkIdx < reversi_height * reversi_width){
 							oppoColor = board_h[checkIdx].name_h;
-							if (pieceColor != ""&&oppoColor != ""&&pieceColor != oppoColor){
-								idxDiff = srcIdx - checkIdx;
+							if (oppoColor == "white"){
+						
+								idxDiff = checkIdx - srcIdx;
+								
 								while (checkIdx >= 0 && checkIdx < reversi_height * reversi_width && board_h[checkIdx].name_h == oppoColor){
 									checkIdx += idxDiff;
 								}
+							
 								if (checkIdx >= 0 && checkIdx < reversi_height * reversi_width && board_h[checkIdx].name_h == ""){
+								
 									return true;
 								}
 							}
@@ -230,7 +239,7 @@ bool reversi::checkBlackValid(int& width, int& height){
 			if (checkIdx >= 0 && checkIdx < reversi_height * reversi_width){
 				oppoColor = board_h[checkIdx].name_h;
 				if (oppoColor == "white"){
-					idxDiff = srcIdx - checkIdx;
+					idxDiff = checkIdx - srcIdx;
 					while (checkIdx >= 0 && checkIdx < reversi_height * reversi_width && board_h[checkIdx].name_h == oppoColor){
 						checkIdx += idxDiff;
 					}
@@ -261,7 +270,7 @@ bool reversi::checkWhiteValid(int& width, int& height){
 			if (checkIdx >= 0 && checkIdx < reversi_height * reversi_width){
 				oppoColor = board_h[checkIdx].name_h;
 				if (oppoColor == "black"){
-					idxDiff = srcIdx - checkIdx;
+					idxDiff = checkIdx - srcIdx;
 					while (checkIdx >= 0 && checkIdx < reversi_height * reversi_width && board_h[checkIdx].name_h == oppoColor){
 						checkIdx += idxDiff;
 					}
@@ -288,7 +297,7 @@ void reversi::turn(){
 		cout << "black piece type in your coordinates" <<endl ;
 	}
 	else if ((!blackTurn) && whiteValidMove()){
-		cout << "black piece type in your coordinates" << endl;
+		cout << "white piece type in your coordinates" << endl;
 	}
 	else{
 		cout <<"you do not have a valid move" << endl;
@@ -312,6 +321,7 @@ void reversi::turn(){
 			gameBase::prompt(width, height);
 		}
 	}
+	blackTurn = !blackTurn;
 	reversi::print();
 	
 }
