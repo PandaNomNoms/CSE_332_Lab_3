@@ -96,16 +96,12 @@ int gameBase::play() {
 	int counter = 0;
 	bool s = stalemate();
 	bool d = done();
-	cout << "now d is " << d << endl;
-	cout << "now s is " << s << endl;
 	/*Check if the game is done or if there are any valid moves*/
 	while (!s && !d) {
-		s = stalemate();
-		d = done();
-		cout << "now d is " << d << endl;
-		cout << "now s is " << s << endl;
 		turn();
 		counter++;
+		s = stalemate();
+		d = done();
 	}
 	/*Win condition*/
 	if (d) {

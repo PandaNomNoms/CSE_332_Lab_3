@@ -144,7 +144,7 @@ void magicSquare::prompt(unsigned int &num){
 	}
 	/*Reprompt if the input is not valid*/
 	while (!((istringstream)input >> num) || (int)num > (magicsquare_height*magicsquare_width) || (int)num < 0) {
-		cout << "Your input is not valid! Either not a number, not a valid piece, or the piece is not available" << endl;
+		cout << "Not a valid piece. Enter a piece(\"n\") or quit(\"quit\"):" << endl;
 		std::cin >> input;
 		if (lowerCase(input) == "quit") {
 			save();
@@ -161,14 +161,14 @@ void magicSquare::turn() {
 		magicSquare::prompt(piece);
 		/*Ensure piece is not used*/
 		while (availablePieces.find(piece) == availablePieces.end()){
-			cout << "The piece is used" << endl;
+			cout << "Not a valid piece. Enter a piece(\"n\") or quit(\"quit\"):" << endl;
 			magicSquare::prompt(piece);
 		}
 		int x, y;
 		/*Prompt for coordinates*/
 		gameBase::prompt(x, y);
 		/*Ensure coordinates are valid*/
-		while ((board_h[y * magicsquare_width + x].name_h != "empty") || (x >= magicsquare_width) || (y >= magicsquare_height) || (x < 0) || (y < 0)) {
+		while (!((x < magicsquare_width) && (y < magicsquare_height) && (x >= 0) && (y >= 0) && (board_h[y * magicsquare_width + x].name_h == "empty"))) {
 			cout << "The coordinate is not available." << endl;
 			gameBase::prompt(x, y);
 		}
