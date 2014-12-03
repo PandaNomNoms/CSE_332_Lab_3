@@ -34,12 +34,18 @@ void magicSquare::load(vector<game_piece>& board) {
 	string line;
 	getline(loadFile, line);
 	if (loadFile.good() && line != "ITS LITERALLY NOTHING" && line == "valid") {
-		cout << "Resuming Magic Square" << endl;
+		cout << "Resuming Magic Square." << endl;
 		for (int i = 0; i < height_h*width_h; ++i) {
 			getline(loadFile, line);
 			string name = line;
 			getline(loadFile, line);
 			string display = line;
+			if (!(name == "empty" && display == " ") || !(stoi(name) > 0 && stoi(name) <= (magicsquare_height*magicsquare_width) && name == display)) {
+				loadFile.close();
+				cout << "Invalid save file. Starting new game." << endl;
+				initialize(board);
+				return;
+			}
 			board.push_back(game_piece(name, display));
 		}
 		getline(loadFile, line);

@@ -27,6 +27,10 @@ shared_ptr<gameBase> gameBase::instance(){
 
 /*Determines whether to construct a Nine Almonds Game or Magic Square Game*/
 void gameBase::getGame(int argc, char* argv[]) {
+	/*No additional arguments case*/
+	if (argc == 1) {
+		throw (int)wrongNumberOfArg;
+	}
 	/*Nine Almonds Game Case*/
 	if (lowerCase(string(argv[gameName])) == "ninealmonds") {
 		if (gamePtr != nullptr){

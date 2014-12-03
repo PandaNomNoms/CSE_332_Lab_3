@@ -10,12 +10,12 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	string saveFileName(argv[gameName]);
 	/*Game board*/
 	vector<game_piece> board;
 	try {
 		/*Get shared pointer*/
 		gameBase::getGame(argc, argv);
+		string saveFileName(argv[gameName]);
 		shared_ptr<gameBase> ptr;
 		ptr = gameBase::instance();
 		return (*ptr).play();
