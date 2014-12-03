@@ -10,7 +10,6 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
-	
 	string saveFileName(argv[gameName]);
 	/*Game board*/
 	vector<game_piece> board;
