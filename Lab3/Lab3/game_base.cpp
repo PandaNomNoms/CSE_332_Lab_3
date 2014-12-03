@@ -95,7 +95,13 @@ void gameBase::checkLongest(game_piece g, int & longest) {
 
 /*Begin the game*/
 int gameBase::play() {
-	load(board_h);
+	try {
+		load(board_h);
+	}
+	catch (...) {
+		cout << "Invalid save file. Starting new game." << endl;
+		initialize(board_h);
+	}
 	print();
 	int counter = 0;
 	bool s = stalemate();

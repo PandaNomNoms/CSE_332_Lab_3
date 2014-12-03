@@ -20,6 +20,7 @@ public:
 	static std::shared_ptr<gameBase> instance();
 	static void getGame(int, char**);
 	int play();
+	virtual void initialize(std::vector<game_piece>&) = 0;
 	virtual void load(std::vector<game_piece>&) = 0;
 	virtual void print() = 0;
 	virtual bool done() = 0;
