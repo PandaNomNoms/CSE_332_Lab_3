@@ -32,6 +32,7 @@ void magicSquare::initialize(vector<game_piece>& board) {
 void magicSquare::load(vector<game_piece>& board) {
 	ifstream loadFile(saveMagicSquare);
 	string line;
+	vector<int> pieces;
 	getline(loadFile, line);
 	if (loadFile.good() && line != "ITS LITERALLY NOTHING" && line == "valid") {
 		cout << "Resuming Magic Square." << endl;
@@ -40,18 +41,37 @@ void magicSquare::load(vector<game_piece>& board) {
 			string name = line;
 			getline(loadFile, line);
 			string display = line;
-			if (!(name == "empty" && display == " ") || !(stoi(name) > 0 && stoi(name) <= (magicsquare_height*magicsquare_width) && name == display)) {
-				loadFile.close();
-				cout << "Invalid save file. Starting new game." << endl;
-				initialize(board);
-				return;
+			if (!(name == "empty" && display == " ")) {
+				if (!(stoi(name) > 0 && stoi(name) <= (magicsquare_height*magicsquare_width) && name == display)) {
+					loadFile.close();
+					cout << "Invalid save file. Starting new game." << endl;
+					initialize(board);
+					return;
+				}
+				pieces.push_back(stoi(display));
 			}
 			board.push_back(game_piece(name, display));
 		}
 		getline(loadFile, line);
 		counter = stoi(line);
 		while (getline(loadFile, line)) {
+			pieces.push_back(stoi(line));
 			availablePieces.insert(stoi(line));
+		}
+		if ((int)pieces.size() > (magicsquare_height*magicsquare_width)) {
+			loadFile.close();
+			cout << "Invalid save file. Starting new game." << endl;
+			initialize(board);
+			return;
+		}
+		sort(pieces.begin(), pieces.end());
+		for (int i = 1; i <= magicsquare_height*magicsquare_width; i++) {
+			if (i != pieces[i-1]) {
+				loadFile.close();
+				cout << "Invalid save file. Starting new game." << endl;
+				initialize(board);
+				return;
+			}
 		}
 		loadFile.close();
 		initiateLongest(board, longest);

@@ -62,9 +62,9 @@ void reversi::load(vector<game_piece>& board) {
 		getline(loadFile, line);
 		counter = stoi(line);
 		getline(loadFile, line);
-		blackName = stoi(line);
+		blackName = line;
 		getline(loadFile, line);
-		whiteName = stoi(line);
+		whiteName = line;
 		getline(loadFile, line);
 		if (line == "black") {
 			blackTurn = true;
@@ -73,6 +73,7 @@ void reversi::load(vector<game_piece>& board) {
 			blackTurn = false;
 		}
 		else {
+			cout << "Invalid save file. Starting new game." << endl;
 			initialize(board);
 			return;
 		}
