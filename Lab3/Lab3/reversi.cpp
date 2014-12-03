@@ -62,8 +62,18 @@ void reversi::load(vector<game_piece>& board) {
 		getline(loadFile, line);
 		counter = stoi(line);
 		getline(loadFile, line);
+		if (line != blackName) {
+			cout << "Different player. Starting new game." << endl;
+			initialize(board);
+			return;
+		}
 		blackName = line;
 		getline(loadFile, line);
+		if (line != whiteName) {
+			cout << "Different player. Starting new game." << endl;
+			initialize(board);
+			return;
+		}
 		whiteName = line;
 		getline(loadFile, line);
 		if (line == "black") {
