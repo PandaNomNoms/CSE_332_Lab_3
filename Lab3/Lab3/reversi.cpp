@@ -244,6 +244,7 @@ bool reversi::checkBlackValid(int& width, int& height){
 	int srcIdx = width + reversi_width * height;
 	int checkIdx;
 	int idxDiff;
+	bool ret = false;
 	for (int neighborHeight = height - 1; neighborHeight <= height + 1; neighborHeight++){
 		for (int neighborWidth = width - 1; neighborWidth <= width + 1; neighborWidth++){
 			checkIdx = neighborWidth + reversi_width * neighborHeight;
@@ -261,13 +262,13 @@ bool reversi::checkBlackValid(int& width, int& height){
 							board_h[checkIdx].display_h = "X";
 
 						}
-						return true;
+						ret = true;
 					}
 				}
 			}
 		}
 	}
-	return false;
+	return ret;
 }
 
 bool reversi::checkWhiteValid(int& width, int& height){
@@ -275,6 +276,7 @@ bool reversi::checkWhiteValid(int& width, int& height){
 	int srcIdx = width + reversi_width * height;
 	int checkIdx;
 	int idxDiff;
+	bool ret = false;
 	for (int neighborHeight = height - 1; neighborHeight <= height + 1; neighborHeight++){
 		for (int neighborWidth = width - 1; neighborWidth <= width + 1; neighborWidth++){
 			checkIdx = neighborWidth + reversi_width * neighborHeight;
@@ -292,13 +294,13 @@ bool reversi::checkWhiteValid(int& width, int& height){
 							board_h[checkIdx].display_h = "O";
 
 						}
-						return true;
+						ret = true;
 					}
 				}
 			}
 		}
 	}
-	return false;
+	return ret;
 }
 
 void reversi::turn(){
