@@ -57,6 +57,12 @@ void reversi::load(vector<game_piece>& board) {
 			string name = line;
 			getline(loadFile, line);
 			string display = line;
+			if (!(name == "" && display == " ")) {
+				if (!(name == "black" && display == "X") && !(name == "white" && display == "O")) {
+					loadFile.close();
+					throw invalidSaveFile;
+				}
+			}
 			board.push_back(game_piece(name, display));
 		}
 		getline(loadFile, line);
@@ -64,6 +70,7 @@ void reversi::load(vector<game_piece>& board) {
 		getline(loadFile, line);
 		if (line != blackName) {
 			cout << "Different player. Starting new game." << endl;
+			loadFile.close();
 			initialize(board);
 			return;
 		}
@@ -71,6 +78,7 @@ void reversi::load(vector<game_piece>& board) {
 		getline(loadFile, line);
 		if (line != whiteName) {
 			cout << "Different player. Starting new game." << endl;
+			loadFile.close();
 			initialize(board);
 			return;
 		}

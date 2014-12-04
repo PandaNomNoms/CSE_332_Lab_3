@@ -40,13 +40,25 @@ void NineAlmondsGame::load(vector<game_piece>& board) {
 	string line;
 	getline(loadFile, line);
 	if (loadFile.good() && line != "ITS LITERALLY NOTHING" && line == "valid") {
+		int almonds = 0;
 		cout << "Resuming Nine Almonds" << endl;
 		for (int i = 0; i < height_h*width_h; ++i) {
 			getline(loadFile, line);
-			string name = line;
+			string loadName = line;
 			getline(loadFile, line);
-			string display = line;
+			string loadDisplay = line;
+			if (!(loadName == "" && loadDisplay == " ")) {
+				if (!(loadName == name) && !(loadDisplay == display)) {
+					loadFile.close();
+					throw invalidSaveFile;
+				}
+				almonds++;
+			}
 			board.push_back(game_piece(name, display));
+		}
+		if (almonds != 9) {
+			loadFile.close();
+			throw invalidSaveFile;
 		}
 		getline(loadFile, line);
 		counter = stoi(line);
