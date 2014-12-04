@@ -112,10 +112,10 @@ void reversi::initialize(std::vector<game_piece>& board){
 	blackTurn = true;
 	for (int i = 0; i < reversi_height*reversi_width; i++){
 		//for the center 4 squares fill them with pieces
-		if (i == 27 | i == 36){
+		if (i == 27 || i == 36) {
 			board.push_back(game_piece("black", "X"));
 		}
-		else if (i == 28 | i == 35){
+		else if (i == 28 || i == 35){
 			board.push_back(game_piece("white", "O"));
 		}
 		else{
