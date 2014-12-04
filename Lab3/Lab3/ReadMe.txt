@@ -1,8 +1,8 @@
 Timothy Young, Yifu Ma Lab3
 Errors:
-	indexing mode of gameboard missused
-	gameboard not printed after each turn
-	stalemate method not checking available pieces
+	lowercase method not working in some cases (fixed)
+	returning error when coordinate outside board entered (fixed)
+
 
 Test Cases:
 	When all the pieces are used and the game is not done, a stalemate statment is given

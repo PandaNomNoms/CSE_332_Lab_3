@@ -34,10 +34,10 @@ ostream& operator<< (ostream& o, const reversi& game) {
 	}
 	o << endl;
 	if (game.blackTurn){
-		o << "this is " << game.blackName << "'s turn to play" << endl;
+		o << game.blackName << "'s turn to play" << endl;
 	}
 	else{
-		o << "this is " << game.whiteName << "'s turn to play" << endl;
+		o << game.whiteName << "'s turn to play" << endl;
 	}
 	return o;
 }
@@ -124,7 +124,7 @@ void reversi::initialize(std::vector<game_piece>& board){
 		}
 	}
 	initiateLongest(board, longest);
-	cout << "the reversi game has been initialized" << endl;
+	cout << "The reversi game has been initialized" << endl;
 }
 //check if the game has a winner
 bool reversi::done(){
@@ -142,12 +142,24 @@ bool reversi::done(){
 	//if the whole board is filled and the counts are not equal, we have a winner
 	if ((blackCount + whiteCount) == (reversi_height * reversi_width)){
 		if (blackCount != whiteCount){
+			if (blackCount > whiteCount) {
+				cout << blackName << " is the winner!" << endl;
+			}
+			else {
+				cout << whiteName << " is the winner!" << endl;
+			}
 			return true;
 		}
 	}
 	//if the game is in stalemate and the counts are not equal, we have a winner
 	if ((!whiteValidMove()) && (!blackValidMove())){
 		if (blackCount != whiteCount){
+			if (blackCount > whiteCount) {
+				cout << blackName << " is the winner!" << endl;
+			}
+			else {
+				cout << whiteName << " is the winner!" << endl;
+			}
 			return true;
 		}
 	}
@@ -202,7 +214,7 @@ bool reversi :: whiteValidMove(){
 					for (int neighborWidth = width - 1; neighborWidth <= width + 1; neighborWidth++){
 						checkIdx = neighborWidth + reversi_width * neighborHeight;
 						//makesure the index is in bounds
-						if (checkIdx >= 0 && checkIdx < reversi_height * reversi_width){
+						if (neighborWidth >= 0 && neighborHeight >= 0 && neighborHeight < height_h && neighborWidth < width_h){
 							oppoColor = board_h[checkIdx].name_h;
 							if (oppoColor == "black"){
 								//if a black piece found, get the difference of 2 indices
@@ -238,11 +250,10 @@ bool reversi::blackValidMove(){
 			srcIdx = width + reversi_width * height;
 			pieceColor = board_h[srcIdx].name_h;
 			if (pieceColor == "black"){
-				
 				for (int neighborHeight = height - 1; neighborHeight <= height + 1; neighborHeight++){
 					for (int neighborWidth = width - 1; neighborWidth <= width + 1; neighborWidth++){
 						checkIdx = neighborWidth + reversi_width * neighborHeight;
-						if (checkIdx >= 0 && checkIdx < reversi_height * reversi_width){
+						if (neighborWidth >= 0 && neighborHeight >= 0 && neighborHeight < height_h && neighborWidth < width_h){
 							oppoColor = board_h[checkIdx].name_h;
 							if (oppoColor == "white"){
 						
@@ -277,7 +288,7 @@ bool reversi::checkBlackValid(int& width, int& height){
 		for (int neighborWidth = width - 1; neighborWidth <= width + 1; neighborWidth++){
 			checkIdx = neighborWidth + reversi_width * neighborHeight;
 			//if a index is in bound and its color is white
-			if (checkIdx >= 0 && checkIdx < reversi_height * reversi_width){
+			if (neighborWidth >= 0 && neighborHeight >= 0 && neighborHeight < height_h && neighborWidth < width_h){
 				oppoColor = board_h[checkIdx].name_h;
 				if (oppoColor == "white"){
 					idxDiff = checkIdx - srcIdx;
@@ -312,7 +323,7 @@ bool reversi::checkWhiteValid(int& width, int& height){
 	for (int neighborHeight = height - 1; neighborHeight <= height + 1; neighborHeight++){
 		for (int neighborWidth = width - 1; neighborWidth <= width + 1; neighborWidth++){
 			checkIdx = neighborWidth + reversi_width * neighborHeight;
-			if (checkIdx >= 0 && checkIdx < reversi_height * reversi_width){
+			if (neighborWidth >= 0 && neighborHeight >= 0 && neighborHeight < height_h && neighborWidth < width_h){
 				oppoColor = board_h[checkIdx].name_h;
 				if (oppoColor == "black"){
 					idxDiff = checkIdx - srcIdx;
@@ -336,42 +347,45 @@ bool reversi::checkWhiteValid(int& width, int& height){
 }
 //game turn method for reversi game
 void reversi::turn(){
-	int width;
-	int height;
-	//check who's turn it is to play and if the player has a valid move
-	if (blackTurn && blackValidMove()){
-		cout << "black piece type in your coordinates" <<endl ;
-	}
-	else if ((!blackTurn) && whiteValidMove()){
-		cout << "white piece type in your coordinates" << endl;
-	}
-	else{
-		//if not, tell them there is no valid move
-		cout <<"you do not have a valid move" << endl;
-		return;
-	}
-	//prompt the playe for input coordinates
-	gameBase::prompt(width, height);
-	int pieceIdx = height*reversi_width + width;
-	//check if the coordinates are in bound
-	while (pieceIdx < 0 || pieceIdx >= reversi_height*reversi_width){
-		cout <<"the coordinates are out of bounds"<< endl;
+	try {
+		int width;
+		int height;
+		//check who's turn it is to play and if the player has a valid move
+		if (blackTurn && blackValidMove()){
+			cout << blackName << "(X) type in your coordinates" << endl;
+		}
+		else if ((!blackTurn) && whiteValidMove()){
+			cout << whiteName << "(O) type in your coordinates" << endl;
+		}
+		else{
+			//if not, tell them there is no valid move
+			cout << "You do not have a valid move" << endl;
+			return;
+		}
+		//prompt the player for input coordinates
 		gameBase::prompt(width, height);
-	}
-	//check if the given coordinates is an empty slot and the move is valid
-	if (blackTurn){
-		//if not valid, re-prompt for new input
-		while (board_h[pieceIdx].name_h != "" || !checkBlackValid(width, height)){
-			cout <<"your move is not valid" << endl;
+		//check if the coordinates are in bound
+		while (width < 0 || height < 0 || height >= reversi_height || width >= reversi_width){
+			cout << "The coordinates are out of bounds." << endl;
 			gameBase::prompt(width, height);
 		}
-	}
-	else{
-		while (board_h[pieceIdx].name_h != "" || !checkWhiteValid(width, height)){
-			cout << "your move is not valid" << endl;
-			gameBase::prompt(width, height);
+		int pieceIdx = height*reversi_width + width;
+		//check if the given coordinates is an empty slot and the move is valid
+		if (blackTurn){
+			//if not valid, re-prompt for new input
+			while (board_h[pieceIdx].name_h != "" || !checkBlackValid(width, height)) {
+				cout << "Your move is not valid" << endl;
+				gameBase::prompt(width, height);
+			}
+		}
+		else{
+			while (board_h[pieceIdx].name_h != "" || !checkWhiteValid(width, height)) {
+				cout << "Your move is not valid" << endl;
+				gameBase::prompt(width, height);
+			}
 		}
 	}
+	catch (char const*) {}
 	//give the turn to the other player and print gameboard
 	blackTurn = !blackTurn;
 	reversi::print();
