@@ -56,7 +56,7 @@ void NineAlmondsGame::load(vector<game_piece>& board) {
 			}
 			board.push_back(game_piece(name, display));
 		}
-		if (almonds != 9) {
+		if (almonds > 9) {
 			loadFile.close();
 			throw invalidSaveFile;
 		}
