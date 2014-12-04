@@ -124,7 +124,7 @@ void reversi::initialize(std::vector<game_piece>& board){
 		}
 	}
 	initiateLongest(board, longest);
-	cout << "The reversi game has been initialized" << endl;
+	cout << "The Reversi game has been initialized" << endl;
 }
 //check if the game has a winner
 bool reversi::done(){
@@ -352,10 +352,10 @@ void reversi::turn(){
 		int height;
 		//check who's turn it is to play and if the player has a valid move
 		if (blackTurn && blackValidMove()){
-			cout << blackName << "(X) type in your coordinates" << endl;
+			cout << blackName << " (X) type in your coordinates. ";
 		}
 		else if ((!blackTurn) && whiteValidMove()){
-			cout << whiteName << "(O) type in your coordinates" << endl;
+			cout << whiteName << " (O) type in your coordinates. ";
 		}
 		else{
 			//if not, tell them there is no valid move
