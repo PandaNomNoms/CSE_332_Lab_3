@@ -44,9 +44,7 @@ void magicSquare::load(vector<game_piece>& board) {
 			if (!(name == "empty" && display == " ")) {
 				if (!(stoi(name) > 0 && stoi(name) <= (magicsquare_height*magicsquare_width) && name == display)) {
 					loadFile.close();
-					cout << "Invalid save file. Starting new game." << endl;
-					initialize(board);
-					return;
+					throw invalidSaveFile;
 				}
 				pieces.push_back(stoi(display));
 			}
@@ -60,17 +58,13 @@ void magicSquare::load(vector<game_piece>& board) {
 		}
 		if ((int)pieces.size() > (magicsquare_height*magicsquare_width)) {
 			loadFile.close();
-			cout << "Invalid save file. Starting new game." << endl;
-			initialize(board);
-			return;
+			throw invalidSaveFile;
 		}
 		sort(pieces.begin(), pieces.end());
 		for (int i = 1; i <= magicsquare_height*magicsquare_width; i++) {
 			if (i != pieces[i-1]) {
 				loadFile.close();
-				cout << "Invalid save file. Starting new game." << endl;
-				initialize(board);
-				return;
+				throw invalidSaveFile;
 			}
 		}
 		loadFile.close();

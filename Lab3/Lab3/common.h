@@ -18,7 +18,7 @@ extern std::string saveReversi;
 
 enum indices { programName, gameName, inputNumber };
 enum indicesForReversi{reversiProgramName, reversiGameName, blackPieceName, whitePieceName, reversiInputNum};
-enum result { success, wrongNumberOfArg, invalidFileName, invalidArgument, couldNotRead, couldNotExtract, noWellFormedDefinitions, dimensionsMismatch, userExit, staleMate, programLogicError, badMem, gamePtrNull, gameAlreadyExist, badGameName };
+enum result { success, wrongNumberOfArg, invalidFileName, invalidArgument, couldNotRead, couldNotExtract, noWellFormedDefinitions, dimensionsMismatch, userExit, staleMate, programLogicError, badMem, gamePtrNull, gameAlreadyExist, badGameName, invalidSaveFile};
 int usage(char *);
 int invalidFile(char *);
 int invalidArg(char *);
