@@ -23,13 +23,13 @@ string saveReversi = "Reversi.txt";
 /*Tells user how to properly use the program*/
 int usage(char * c) {
 	cout << "Usage: $" << c << " NineAlmonds " << endl << "or" << endl << "$" << c << " MagicSquare" << endl;
-	cout << "or" << endl << "$" << c << " Reversi \"name\" \"name\"" << endl;
+	cout << "or" << endl << "$" << c << " Reversi \"Player 1\" \"Player 2\"" << endl;
 	return wrongNumberOfArg;
 }
 
 /*Tells user if argument is invalid*/
 int invalidArg(char * c) {
-	cout << "Error: " << c << " is not a valid argument.  Use \"NineAlmonds\" or \"MagicSquare\"" << endl;
+	cout << "Error: " << c << " is not a valid argument.  Use \"NineAlmonds\" or \"MagicSquare\" or \"Reversi \"Player 1\" \"Player 2\"\"" << endl;
 	return invalidArgument;
 }
 

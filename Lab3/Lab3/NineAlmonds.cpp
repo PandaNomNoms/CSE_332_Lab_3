@@ -35,6 +35,7 @@ ostream& operator<< (ostream& o, const NineAlmondsGame& game) {
 	return o;
 }
 
+/*Load game if possible*/
 void NineAlmondsGame::load(vector<game_piece>& board) {
 	ifstream loadFile(saveNineAlmonds);
 	string line;
@@ -42,11 +43,13 @@ void NineAlmondsGame::load(vector<game_piece>& board) {
 	if (loadFile.good() && line != "ITS LITERALLY NOTHING" && line == "valid") {
 		int almonds = 0;
 		cout << "Resuming Nine Almonds" << endl;
+		/*Load board*/
 		for (int i = 0; i < height_h*width_h; ++i) {
 			getline(loadFile, line);
 			string loadName = line;
 			getline(loadFile, line);
 			string loadDisplay = line;
+			/*If pieces are not valid indicating bad savefile*/
 			if (!(loadName == "" && loadDisplay == " ")) {
 				if (!(loadName == name) && !(loadDisplay == display)) {
 					loadFile.close();
@@ -56,15 +59,18 @@ void NineAlmondsGame::load(vector<game_piece>& board) {
 			}
 			board.push_back(game_piece(name, display));
 		}
+		/*If more than 9 almonds indicating bad savefile*/
 		if (almonds > 9) {
 			loadFile.close();
 			throw invalidSaveFile;
 		}
+		/*Get turn counter*/
 		getline(loadFile, line);
 		counter = stoi(line);
 		loadFile.close();
 		initiateLongest(board, longest);
 	}
+	/*If no savefile*/
 	else {
 		initialize(board);
 	}
@@ -252,6 +258,7 @@ void NineAlmondsGame::print() {
 	cout << *this;
 }
 
+/*Asks user if they wish to save the game*/
 void NineAlmondsGame::save() {
 	string input;
 	cout << "Would you like to save the game? (yes/no)" << endl;
@@ -262,10 +269,12 @@ void NineAlmondsGame::save() {
 	}
 	std::ofstream saveFile;
 	saveFile.open(saveNineAlmonds, std::ofstream::out | std::ofstream::trunc);
+	/*Clears savefile*/
 	if (lowerCase(input) == "no") {
 		saveFile << "ITS LITERALLY NOTHING" << endl;
 		cout << "Quitters never win." << endl;
 	}
+	/*Saves current state of the game*/
 	else {
 		saveFile << "valid" << endl;
 		for (game_piece g : board_h) {

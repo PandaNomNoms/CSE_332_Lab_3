@@ -20,12 +20,14 @@ int main(int argc, char* argv[])
 		ptr = gameBase::instance();
 		return (*ptr).play();
 	}
+	/*Catch bad memory allocation*/
 	catch(bad_alloc) {
 		cout << "Bad allocation" << endl;
 		return badMem;
 	}
+	/*Catch any input errors affecting creation of the game*/
 	catch (int n) {
-		if (n == badGameName || n == wrongNumberOfArg){
+		if (n == badGameName || n == wrongNumberOfArg || n == invalidArgument){
 			usage(argv[programName]);
 		}
 		else if (n == gameAlreadyExist) {

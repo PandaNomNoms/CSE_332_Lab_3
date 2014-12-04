@@ -28,7 +28,7 @@ shared_ptr<gameBase> gameBase::instance(){
 /*Determines whether to construct a Nine Almonds Game or Magic Square Game*/
 void gameBase::getGame(int argc, char* argv[]) {
 	/*No additional arguments case*/
-	if (argc == 1) {
+	if (!(argc == 2 || argc == 4)) {
 		throw (int)wrongNumberOfArg;
 	}
 	/*Nine Almonds Game Case*/
@@ -39,6 +39,7 @@ void gameBase::getGame(int argc, char* argv[]) {
 		else{
 		vector<game_piece>* vec = new vector<game_piece>;
 			gamePtr = shared_ptr<gameBase>(new NineAlmondsGame(*vec));
+			return;
 		}
 		
 	}
@@ -50,13 +51,14 @@ void gameBase::getGame(int argc, char* argv[]) {
 		else{
 			vector<game_piece>* vec = new vector<game_piece>;
 			gamePtr = shared_ptr<gameBase>(new magicSquare(*vec));
+			return;
 		}
 	}
 	/*Neither Case*/
+	/*Reversi Case*/
 	else if(lowerCase(string(argv[reversiGameName])) == "reversi"){
 	
 		if (argc != reversiInputNum){
-			
 			throw (int)wrongNumberOfArg;
 		}
 		if (gamePtr != nullptr){
@@ -66,9 +68,10 @@ void gameBase::getGame(int argc, char* argv[]) {
 		else{
 			vector<game_piece>* vec = new vector<game_piece>;
 			gamePtr = shared_ptr<gameBase>(new reversi(*vec, argv[blackPieceName], argv[whitePieceName]));
-			
+			return;
 		}
 	}
+	throw (int)invalidArgument;
 }
 
 /*Constructor for gameBase*/

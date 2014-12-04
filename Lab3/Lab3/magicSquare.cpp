@@ -205,6 +205,7 @@ void magicSquare::turn() {
 	catch (char const*) {}
 }
 
+/*Asks user if they wish to save*/
 void magicSquare::save() {
 	string input;
 	cout << "Would you like to save the game? (yes/no)" << endl;
@@ -215,10 +216,12 @@ void magicSquare::save() {
 	}
 	std::ofstream saveFile;
 	saveFile.open(saveMagicSquare, std::ofstream::out | std::ofstream::trunc);
+	/*Clears the savefile*/
 	if (lowerCase(input) == "no") {
 		saveFile << "ITS LITERALLY NOTHING" << endl;
 		cout << "Quitters never win." << endl;
 	}
+	/*Saves the current state of the game*/
 	else {
 		saveFile << "valid" << endl;
 		for (game_piece g : board_h) {
