@@ -8,6 +8,8 @@
 #include "common.h"
 #include "reversi.h"
 using namespace std;
+
+int badIdx[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 16, 24, 32, 40, 48, 56};
 //game constructor, takes in the 2 strings passed by main and set them to be the names of 2 players
 reversi::reversi(std::vector<game_piece> pieces, std::string blackName, std::string whiteName) : gameBase(pieces, reversi_height, reversi_width) {
 	(*this).blackName = blackName;
@@ -220,7 +222,7 @@ bool reversi :: whiteValidMove(){
 								//if a black piece found, get the difference of 2 indices
 								idxDiff = checkIdx - srcIdx;
 								//check if a empty slot exists on the other side 
-								while (checkIdx >= 0 && checkIdx < reversi_height * reversi_width && board_h[checkIdx].name_h == oppoColor){
+								while (checkIdx >= 0 && checkIdx < reversi_height * reversi_width && board_h[checkIdx].name_h == oppoColor && std::find(std::begin(badIdx),std::end(badIdx),checkIdx)==std::end(badIdx)){
 									checkIdx += idxDiff;
 								}
 								//if the index is in bound and the slot is empty, we have a valid move
@@ -259,7 +261,7 @@ bool reversi::blackValidMove(){
 						
 								idxDiff = checkIdx - srcIdx;
 								
-								while (checkIdx >= 0 && checkIdx < reversi_height * reversi_width && board_h[checkIdx].name_h == oppoColor){
+								while (checkIdx >= 0 && checkIdx < reversi_height * reversi_width && board_h[checkIdx].name_h == oppoColor && std::find(std::begin(badIdx),std::end(badIdx),checkIdx)==std::end(badIdx)){
 									checkIdx += idxDiff;
 								}
 							
@@ -293,7 +295,7 @@ bool reversi::checkBlackValid(int& width, int& height){
 				if (oppoColor == "white"){
 					idxDiff = checkIdx - srcIdx;
 					//check to see if there is a black piece on the other end of the sequence
-					while (checkIdx >= 0 && checkIdx < reversi_height * reversi_width && board_h[checkIdx].name_h == oppoColor){
+					while (checkIdx >= 0 && checkIdx < reversi_height * reversi_width && board_h[checkIdx].name_h == oppoColor && std::find(std::begin(badIdx),std::end(badIdx),checkIdx)==std::end(badIdx)){
 						checkIdx += idxDiff;
 					}
 					if (checkIdx >= 0 && checkIdx < reversi_height * reversi_width && board_h[checkIdx].name_h == "black"){
@@ -327,7 +329,7 @@ bool reversi::checkWhiteValid(int& width, int& height){
 				oppoColor = board_h[checkIdx].name_h;
 				if (oppoColor == "black"){
 					idxDiff = checkIdx - srcIdx;
-					while (checkIdx >= 0 && checkIdx < reversi_height * reversi_width && board_h[checkIdx].name_h == oppoColor){
+					while (checkIdx >= 0 && checkIdx < reversi_height * reversi_width && board_h[checkIdx].name_h == oppoColor && std::find(std::begin(badIdx),std::end(badIdx),checkIdx)==std::end(badIdx)){
 						checkIdx += idxDiff;
 					}
 					if (checkIdx >= 0 && checkIdx < reversi_height * reversi_width && board_h[checkIdx].name_h == "white"){
